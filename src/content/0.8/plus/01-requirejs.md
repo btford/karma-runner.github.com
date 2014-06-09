@@ -1,10 +1,12 @@
+pageTitle: RequireJS
+menuTitle: RequireJS
+
 To get Karma to run with [Require.js] we need two files:
 
 * `karma.conf.js` &mdash; which configures Karma
 * `test-main.js` &mdash; which configures Require.js for the tests
 
-Let's say our app has a directory structure which looks something like
-this:
+Let's imagine our app has a directory structure which looks something like this:
 
 ```bash
 $ tree
@@ -34,8 +36,8 @@ command line:
 $ karma init
 ```
 
-This will give you a series of prompts for things such as paths to
-source and test and which browsers to capture.
+This will give you a series of prompts for things such as paths to the source and test
+files as well as which browsers to capture.
 
 In this example we'll use Jasmine, but other test frameworks works just
 as well.
@@ -48,37 +50,38 @@ Usually you'll only need to include your `test-main.js` file, which has
 the same role for your tests as `main.js` has for your app when using
 Require.js.
 
-For the question *"Which files do you want to test?"*, we choose all the
+For the question *"What is the location of your source and test files?"*, we choose all the
 files we want to load with Require.js. For this example we'll need:
 
 * `lib/**/*.js` &mdash; all external libraries
 * `src/**/*.js` &mdash; our source code
 * `test/**/*Spec.js` &mdash; all the tests
 
-And then, for excludes, type `src/main.js`, as we don't want to actually
+And then, when excluding files, type in `src/main.js`, as we don't want to actually
 start the application in our tests.
 
 Now your `karma.conf.js` should include:
 
 ```javascript
 // list of files / patterns to load in the browser
-files = [
-  JASMINE,
-  JASMINE_ADAPTER,
-  REQUIRE,
-  REQUIRE_ADAPTER,
+module.exports = function(config) {
+  config.set({
+    frameworks: ['jasmine', 'requirejs'],
 
-  {pattern: 'lib/**/*.js', included: false},
-  {pattern: 'src/**/*.js', included: false},
-  {pattern: 'test/**/*Spec.js', included: false},
+    files: [
+      {pattern: 'lib/**/*.js', included: false},
+      {pattern: 'src/**/*.js', included: false},
+      {pattern: 'test/**/*Spec.js', included: false},
 
-  'test/test-main.js'
-];
+      'test/test-main.js'
+    ],
 
-// list of files to exclude
-exclude = [
-    'src/main.js'
-];
+    // list of files to exclude
+    exclude: [
+        'src/main.js'
+    ]
+  });
+};
 ```
 
 ## Configuring Require.js
@@ -108,38 +111,44 @@ array we find all our test files.
 
 Now we can tell Require.js to load our tests, which must be done
 asynchronously as dependencies must be fetched before the tests are run.
-The `test/main-test.js` file ends up looking like this:
+The `test/test-main.js` file ends up looking like this:
 
 ```javascript
-var tests = [];
-for (var file in window.__karma__.files) {
-  if (window.__karma__.files.hasOwnProperty(file)) {
-    if (/Spec\.js$/.test(file)) {
-      tests.push(file);
-    }
+var allTestFiles = [];
+var TEST_REGEXP = /test\.js$/;
+
+var pathToModule = function(path) {
+  return path.replace(/^\/base\//, '').replace(/\.js$/, '');
+};
+
+Object.keys(window.__karma__.files).forEach(function(file) {
+  if (TEST_REGEXP.test(file)) {
+    // Normalize paths to RequireJS module names.
+    allTestFiles.push(pathToModule(file));
   }
-}
+});
 
-requirejs.config({
-    // Karma serves files from '/base'
-    baseUrl: '/base/src',
+require.config({
+  // Karma serves files under /base, which is the basePath from your config file
+  baseUrl: '/base/src',
 
-    paths: {
-        'jquery': '../lib/jquery',
-        'underscore': '../lib/underscore',
-    },
+  // example of using shim, to load non AMD libraries (such as underscore and jquery)
+  paths: {
+    'jquery': '../lib/jquery',
+    'underscore': '../lib/underscore',
+  },
 
-    shim: {
-        'underscore': {
-            exports: '_'
-        }
-    },
+  shim: {
+    'underscore': {
+      exports: '_'
+    }
+  },
 
-    // ask Require.js to load these files (all our tests)
-    deps: tests,
+  // dynamically load all test files
+  deps: allTestFiles,
 
-    // start test run, once Require.js is done
-    callback: window.__karma__.start
+  // we have to kickoff jasmine, as it is asynchronous
+  callback: window.__karma__.start
 });
 ```
 

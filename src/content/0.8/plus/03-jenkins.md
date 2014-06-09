@@ -1,11 +1,11 @@
+pageTitle: Jenkins CI
+menuTitle: Jenkins CI
+
 [Jenkins CI] is one of the most popular continuous integration servers
 in the market today. At some point while developing your [AngularJS]
 project (hopefully early on), you might want to have automated tests run
 off your code versioning system. Jenkins will help you with this task.
-You can integrate Karma to your Jenkins setup fairly easy and as of
-version 0.3.12, test results can be "pretty printed" into a format
-Jenkins understands (i.e. no need to hunt down failures in the console
-log). This tutorial assumes you have Jenkins already setup and running
+This tutorial assumes you have Jenkins already setup and running
 on your CI environment.
 
 ## Install Prerequisites
@@ -15,22 +15,21 @@ You need the following tools installed on your Jenkins CI server:
 * Karma
 
 Optional we highly suggest to install the following Jenkins plug-in:
-[EnvInject] as it makes things easier under certain linux
-distributions and user permissions.
+* [EnvInject] - it makes things easier under certain linux distributions and user permissions.
 
 ## Configure Karma
  Make the following additions and changes to your `karma.conf.js`
  file as needed:
 
 ```javascript
-singleRun = true;
-reporters = ['dots', 'junit'];
-junitReporter = {
+singleRun: true,
+reporters: ['dots', 'junit'],
+junitReporter: {
   outputFile: 'test-results.xml'
-};
+},
  ```
 
-Please note the `test-result.xml` file will be output to the present
+Please note the `test-result.xml` file will be written to the present
 working directory (and you will need to tell Jenkins where to find it).
 
 ## Create a new Jenkins Job
