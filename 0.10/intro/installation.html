@@ -25,6 +25,10 @@
 <body>
   <div id="wrap" class="boxed">
     <header>
+      <div class="flash">
+        <b>Heads Up!</b> You're viewing the docs for <b>v0.10</b>, an old version of Karma.
+        <a href="/0.12/intro/installation.html"><b>v0.12</b> is the newest</a>.
+      </div>
       <div class="container clearfix">
         <div class="six columns">
           <div class="logo"><a href="/0.10/index.html"><img src="/assets/img/banner.png" alt="Karma - Spectacular Test Runner for JavaScript" title="Karma - Spectacular Test Runner for JavaScript"></a></div>
@@ -38,6 +42,7 @@
                   <li><a href="/0.10/intro/configuration.html">Configuration</a></li>
                   <li><a href="/0.10/intro/how-it-works.html">How It Works</a></li>
                   <li><a href="/0.10/intro/faq.html">FAQ</a></li>
+                  <li><a href="/0.10/intro/troubleshooting.html">Troubleshooting</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">config</a>
@@ -63,9 +68,11 @@
               </li>
               <li><a href="javascript:void" class="">dev</a>
                 <ul>
+                  <li><a href="/0.10/dev/contributing.html">Contributing</a></li>
+                  <li><a href="/0.10/dev/making-changes.html">Making Changes</a></li>
+                  <li><a href="/0.10/dev/maintaining.html">Maintaining</a></li>
                   <li><a href="/0.10/dev/public-api.html">Public Api</a></li>
                   <li><a href="/0.10/dev/plugins.html">Plugins</a></li>
-                  <li><a href="/0.10/dev/contributing.html">Contributing</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">about</a>
@@ -97,41 +104,32 @@
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p>Karma runs on <a href="http://nodejs.org/">Node.js</a> and is available via <a href="npmjs.org/package/karma">NPM</a>.</p>
-<h2>Requirements</h2>
-<ol>
-  <li>
-    <h3><a href="http://nodejs.org/download/">Node.js</a></h3>
-    <p>
-      There are installers for both Mac and Windows. On Linux, we recommend using
-      <a href="https://github.com/creationix/nvm">NVM</a>.
-    </p>
-  </li>
-  <li>
-    <h3><a href="https://npmjs.org/">Node Package Manager (NPM)</a></h3>
-    <p>
-      NPM is a package manager for Node.js which is used to install Karma. This should
-      automatically be installed when Node.js is installed, but if not then please install
-      it afterwards.
-    </p>
-  </li>
-</ol>
+        <div id="markdown" class="sixteen columns bottom"><p>Karma runs on <a href="http://nodejs.org/">Node.js</a> and is available as an <a href="npmjs.org/package/karma">NPM</a> package.</p>
+<h2>Installing Node.js</h2>
+<p>There are <a href="http://nodejs.org/download/">installers</a> for both Mac and Windows.
+On Linux, we recommend using <a href="https://github.com/creationix/nvm">NVM</a>.</p>
+<div class="alert alert-success"><h4 class="alert-heading">Note: </h4>Karma works on the two latest stable versions. That is <strong>0.8.x</strong> and <strong>0.10.x</strong> at this point.
 
-<h2>Global &quot;System-Wide&quot; Installation</h2>
-<p>This is the recommended approach to installing and making use of Karma. It will install Karma into your global
-<code>node_modules</code> directory and create a symlink in your system path, so that you can run the <code>karma</code>
-command from any directory. This means that the <code>karma</code> command (which is the central command that Karma uses to run
-tests) can be executed anywhere via the command line.</p>
-<p>The following command will install Karma globally:</p>
-<pre><code class="language-bash">$ npm install -g karma</code></pre>
-<p>Please note, that the <code>karma</code> command will always look for a locally installed instance of Karma first and
-before resorting to a global install and, if present, then the local version will be utilized.
-This allows you to use different version of Karma per project.</p>
-<h2>Local Installation</h2>
-<p>A local installation will install Karma into your current directory&#39;s <code>node_modules</code>.</p>
-<pre><code class="language-bash">$ npm install karma --save-dev</code></pre>
-<p>The karma command can now be also executed directly from the node_modules directory:</p>
-<pre><code class="language-bash">$ ./node_modules/.bin/karma</code></pre>
+
+</div>
+<h2>Installing Karma and plugins</h2>
+<p>The recommended approach is to install Karma (and all the plugins your project needs) locally in
+the project&#39;s directory.</p>
+<pre><code class="language-bash"><span class="hljs-comment"># Install Karma:</span>
+$ npm install karma --save-dev
+
+<span class="hljs-comment"># Install plugins that your project needs:</span>
+$ npm install karma-jasmine karma-chrome-launcher --save-dev</code></pre>
+<p>This will install <code>karma</code>, <code>karma-jasmine</code> and <code>karma-chrome-launcher</code> packages into <code>node_modules</code> in your current
+working directory and also save these as <code>devDependencies</code> in <code>package.json</code>, so that any
+other developer working on the project will only have to do <code>npm install</code> in order to get all these
+dependencies installed.</p>
+<pre><code class="language-bash"><span class="hljs-comment"># Run Karma:</span>
+$ ./node_modules/karma/bin/karma start</code></pre>
+<h2>Commandline Interface</h2>
+<p>Typing <code>./node_modules/karma/bin/karma start</code> sucks and so you might find it useful to install <code>karma-cli</code> globally.</p>
+<pre><code class="language-bash">$ npm install -g karma-cli</code></pre>
+<p>Then, you can run Karma simply by <code>karma</code> from anywhere and it will always run the local version.</p>
 
         </div>
       </div>

@@ -25,6 +25,10 @@
 <body>
   <div id="wrap" class="boxed">
     <header>
+      <div class="flash">
+        <b>Heads Up!</b> You're viewing the docs for <b>v0.10</b>, an old version of Karma.
+        <a href="/0.12/config/preprocessors.html"><b>v0.12</b> is the newest</a>.
+      </div>
       <div class="container clearfix">
         <div class="six columns">
           <div class="logo"><a href="/0.10/index.html"><img src="/assets/img/banner.png" alt="Karma - Spectacular Test Runner for JavaScript" title="Karma - Spectacular Test Runner for JavaScript"></a></div>
@@ -38,6 +42,7 @@
                   <li><a href="/0.10/intro/configuration.html">Configuration</a></li>
                   <li><a href="/0.10/intro/how-it-works.html">How It Works</a></li>
                   <li><a href="/0.10/intro/faq.html">FAQ</a></li>
+                  <li><a href="/0.10/intro/troubleshooting.html">Troubleshooting</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="active">config</a>
@@ -63,9 +68,11 @@
               </li>
               <li><a href="javascript:void" class="">dev</a>
                 <ul>
+                  <li><a href="/0.10/dev/contributing.html">Contributing</a></li>
+                  <li><a href="/0.10/dev/making-changes.html">Making Changes</a></li>
+                  <li><a href="/0.10/dev/maintaining.html">Maintaining</a></li>
                   <li><a href="/0.10/dev/public-api.html">Public Api</a></li>
                   <li><a href="/0.10/dev/plugins.html">Plugins</a></li>
-                  <li><a href="/0.10/dev/contributing.html">Contributing</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">about</a>
@@ -101,9 +108,9 @@
 they get served to the browser. These are configured in the <code>preprocessors</code> block
 of the configuration file:</p>
 <pre><code class="language-javascript">preprocessors: {
-  <span class="string">'**/*.coffee'</span>: [<span class="string">'coffee'</span>],
-  <span class="string">'**/*.tea'</span>: [<span class="string">'coffee'</span>],
-  <span class="string">'**/*.html'</span>: [<span class="string">'html2js'</span>]
+  <span class="hljs-string">'**/*.coffee'</span>: [<span class="hljs-string">'coffee'</span>],
+  <span class="hljs-string">'**/*.tea'</span>: [<span class="hljs-string">'coffee'</span>],
+  <span class="hljs-string">'**/*.html'</span>: [<span class="hljs-string">'html2js'</span>]
 },</code></pre>
 <p>Note the multiple expressions referencing the &quot;coffee&quot; preprocessor, as a preprocessor can be listed more than once,
 as another way to specify multiple file path expressions.</p>
@@ -111,7 +118,6 @@ as another way to specify multiple file path expressions.</p>
 
 </div>
 <h2>Available Preprocessors</h2>
-<p>These preprocessors/plugins are shipped with Karma by default:</p>
 <ul>
 <li><a href="https://github.com/karma-runner/karma-coffee-preprocessor">coffee</a></li>
 <li><a href="https://github.com/karma-runner/karma-html2js-preprocessor">html2js</a><ul>
@@ -119,23 +125,18 @@ as another way to specify multiple file path expressions.</p>
 <li>If this preprocessor is disabled, included .html files will need <code>base/</code> added to beginning of their path reference. See <a href="https://github.com/karma-runner/karma/issues/788">discussion in issue 788</a>.</li>
 </ul>
 </li>
-</ul>
-<p>Additional preprocessors can be loaded through <a href="plugins.html">plugins</a>, such as:</p>
-<ul>
 <li><a href="https://github.com/karma-runner/karma-coverage">coverage</a></li>
 <li><a href="https://github.com/karma-runner/karma-ng-html2js-preprocessor">ng-html2js</a></li>
-<li><a href="https://github.com/karma-runner/karma-ember-preprocessor">ember</a></li>
+<li><a href="https://www.npmjs.org/browse/keyword/karma-preprocessor">many more</a></li>
 </ul>
-<p>As mentioned above above, only the coffee and html2j preprocessors come bundled with Karma. Therefore, to use additional preprocessors,
-simply install the required NPM library first and the installed preprocessor can be used regularly.</p>
-<p>Here&#39;s an example of how to add the coverage preprocessor to your testing suite:</p>
-<pre><code class="language-bash"><span class="comment"># Install it first with NPM</span>
-$ npm install karma-coverage --save-dev</code></pre>
+<p>Here&#39;s an example of how to add the CoffeScript preprocessor to your testing suite:</p>
+<pre><code class="language-bash"><span class="hljs-comment"># Install it first with NPM</span>
+$ npm install karma-coffee-preprocessor --save-dev</code></pre>
 <p>And then inside your configuration file...</p>
-<pre><code class="language-javascript">module.exports = <span class="keyword">function</span>(config) {
+<pre><code class="language-javascript">module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(config)</span> {</span>
   config.set({
     preprocessors: {
-      <span class="string">'**/*.js'</span>: [<span class="string">'coverage'</span>]
+      <span class="hljs-string">'**/*.coffee'</span>: [<span class="hljs-string">'coffee'</span>]
     }
   });
 };</code></pre>
@@ -144,14 +145,14 @@ $ npm install karma-coverage --save-dev</code></pre>
 <p>Some of the preprocessors can be also configured:</p>
 <pre><code class="language-javascript">coffeePreprocessor: {
   options: {
-    bare: <span class="literal">false</span>
+    bare: <span class="hljs-literal">false</span>
   }
 }</code></pre>
 <p>Or define a configured preprocessor:</p>
 <pre><code class="language-javascript">customPreprocessors: {
   bare_coffee: {
-    base: <span class="string">'coffee'</span>,
-    options: {bare: <span class="literal">true</span>}
+    base: <span class="hljs-string">'coffee'</span>,
+    options: {bare: <span class="hljs-literal">true</span>}
   }
 }</code></pre>
 <h2>Minimatching</h2>
