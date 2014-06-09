@@ -1,31 +1,12 @@
-**The files array determines which files are loaded, watched and served by Testacular.**
+**The `files` array determines which files are included in the browser and which files are watched and served by Karma.**
 
-## Adapters
-The first thing you usually need is an adapter. The following adapters
-are bundled with Testacular:
-
-* Jasmine (`JASMINE`, `JASMINE_ADAPTER`)
-* Mocha (`MOCHA`, `MOCHA_ADAPTER`)
-* QUnit (`QUNIT`, `QUNIT_ADAPTER`)
-* RequireJS (`REQUIRE`, `REQUIRE_ADAPTER`)
-* Angular Scenario Runner (`ANGULAR_SCENARIO`, `ANGULAR_SCENARIO_ADAPTER`)
-
-If you want to use any of these, add `<FRAMEWORK>` and
-`<FRAMEWORK>_ADAPTER` to your `files` list. So for example if you want
-to use Mocha you have the following in your config file:
-```javascript
-files = [
-  MOCHA,
-  MOCHA_ADAPTER
-];
-```
 
 ## Pattern matching and `basePath`
-- All the relative patterns will get resolved to `basePath` first.
+- All of the relative patterns will get resolved to `basePath` first.
 - If the `basePath` is a relative path, it gets resolved to the
   directory where the configuration file is.
 - Eventually, all the patterns will get resolved into files using
-  [glob], so you can use expressions like `test/unit/**/*.spec.js`.
+  [glob], so you can use [minimatch] expressions like `test/unit/**/*.spec.js`.
 
 ## Ordering
 - The order of patterns determines the order of files in which they
@@ -35,16 +16,10 @@ files = [
   same file, it's included as if it only matched the first pattern.
 
 ## Included, served, watched
-Since version 0.5.2 there is the ability to configure the patterns
-more closely.
+Each pattern is either a simple string or an object with four properties:
 
-If you define them like before a simple pattern like
-`'test/unit/*.js'` this gets expanded internally to the following:
-```javascript
-  {pattern: 'test/unit/*.js', watched: true, included: true, served: true}
-```
 ### `pattern`
-* **Description.** The pattern to use for matching.
+* **Description.** The pattern to use for matching. This property is mandatory.
 
 ### `watched`
 * **Type.** Boolean
@@ -56,33 +31,64 @@ If you define them like before a simple pattern like
 * **Type.** Boolean
 * **Default.** `true`
 * **Description.** Should the files be included in the browser using
-    `<script>` tag? Use `false` if you wanna load them manually, eg.
-    using [Require.js](../plus/RequireJS.html).
+    `<script>` tag? Use `false` if you want to load them manually, eg.
+    using [Require.js](../plus/requirejs.html).
 
 ### `served`
 * **Type.** Boolean
 * **Default.** `true`
-* **Description.** Should the files be served by Testacular's webserver?
+* **Description.** Should the files be served by Karma's webserver?
+
+## Preprocessor transformations
+Depending on preprocessor configuration, be aware that files loaded may be transformed and no longer available in
+their native format. For instance, if html2js preprocessor is enabled, the actual .html files are no longer
+served - but rather available as `window.__html__['my.html']`. Read more about [preprocessors].
 
 ## Complete example
-Here is a complete example showing the different options that are possible.
+Here is a complete example showing the different options possible:
 ```javascript
-files = [
+files: [
 
-  // Adapter
-  MOCHA,
-  MOCHA_ADAPTER,
-
-  // simple patterns to load the needed testfiles
-  'test/fixtures/**/*.html',
+  // simple pattern to load the needed testfiles
+  // equal to {pattern: 'test/unit/*.spec.js', watched: true, served: true, included: true}
   'test/unit/*.spec.js',
 
   // this file gets served but will be ignored by the watcher
+  // note if html2js preprocessor is active, reference as `window.__html__['compiled/index.html']`
   {pattern: 'compiled/index.html', watched: false},
 
-  // this file only gets watched but otherwise ignored
+  // this file only gets watched and is otherwise ignored
   {pattern: 'app/index.html', included: false, served: false}
-];
+],
 ```
 
+## Loading Assets
+By default all assets are served at `http://localhost:[PORT]/base/`, Example for loading images
+
+```javascript
+files: [
+  {pattern: 'test/images/*.jpg', watched: false, included: false, served: true}
+],
+```
+
+in this case the image is accessed at `http://localhost:[PORT]/base/test/images/[MY IMAGE].jpg`
+
+notice the **base** in the URL
+
+
+or in addition you can use a proxy
+
+```javascript
+proxies: {
+  '/img/': 'http://localhost:8080/base/test/images/'
+},
+```
+now you can fetch images in 'test/images' at `http://localhost:8080/img/[MY IMAGE].jpg`
+
+just change **8080** to the port you use
+
+
+
 [glob]: https://github.com/isaacs/node-glob
+[preprocessors]: preprocessors.html
+[minimatch]: https://github.com/isaacs/minimatch

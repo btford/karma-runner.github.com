@@ -1,34 +1,47 @@
-Testacular runs on [Node.js] and is available as a node module via [NPM].
+Karma runs on [Node.js] and is available as an [NPM] package.
 
-## Requirements
+## Installing Node.js
 
-First, you need to install [Node.js]. There are installers for both
-Mac and Windows. On Linux, we recommend using [NVM].
+There are [installers](http://nodejs.org/download/) for both Mac and Windows.
+On Linux, we recommend using [NVM](https://github.com/creationix/nvm).
 
-## Global Installation
-This is the recommended way. It will install Testacular into your
-global `node_modules` directory and create a symlink to its binary.
+Note: Karma works on the two latest stable versions. That is **0.8.x** and **0.10.x** at this point.
 
-```bash
-$ npm install -g testacular
 
-# Start Testacular
-$ testacular start
-```
+## Installing Karma and plugins
 
-## Local Installation
-A local installation will install Testacular into your current
-directory's `node_modules`. That allows you to have different
-versions for different projects.
+The recommended approach is to install Karma (and all the plugins your project needs) locally in
+the project's directory.
 
 ```bash
-$ npm install testacular
+# Install Karma:
+$ npm install karma --save-dev
 
-# Start Testacular
-$ ./node_modules/.bin/testacular start
+# Install plugins that your project needs:
+$ npm install karma-jasmine karma-chrome-launcher --save-dev
+
 ```
+
+This will install `karma`, `karma-jasmine` and `karma-chrome-launcher` packages into `node_modules` in your current
+working directory and also save these as `devDependencies` in `package.json`, so that any
+other developer working on the project will only have to do `npm install` in order to get all these
+dependencies installed.
+
+```bash
+# Run Karma:
+$ ./node_modules/karma/bin/karma start
+```
+
+## Commandline Interface
+Typing `./node_modules/karma/bin/karma start` sucks and so you might find it useful to install `karma-cli` globally.
+
+```bash
+$ npm install -g karma-cli
+```
+
+Then, you can run Karma simply by `karma` from anywhere and it will always run the local version.
 
 
 [Node.js]: http://nodejs.org/
-[NPM]: https://npmjs.org/
+[NPM]: npmjs.org/package/karma
 [NVM]: https://github.com/creationix/nvm

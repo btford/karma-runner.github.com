@@ -1,4 +1,10 @@
-**Format of the commit message:**
+showInMenu: false
+
+## The reasons for these conventions:
+- automatic generating of the changelog
+- simple navigation through git history (eg. ignoring style changes)
+
+## Format of the commit message:
 ```bash
 <type>(<scope>): <subject>
 
@@ -14,11 +20,11 @@ blank and other lines should be wrapped at 80 characters.
 
 ### Allowed `<type>` values:
 
-* **feat** (new feature)
-* **fix** (bug fix)
-* **docs** (changes to documentation)
-* **style** (formatting, missing semi colons, etc; no code change)
-* **refactor** (refactoring production code)
+* **feat** (new feature for the user, not a new feature for build script)
+* **fix** (bug fix for the user, not a fix to a build script)
+* **docs** (changes to the documentation)
+* **style** (formatting, missing semi colons, etc; no production code change)
+* **refactor** (refactoring production code, eg. renaming a variable)
 * **test** (adding missing tests, refactoring tests; no production code change)
 * **chore** (updating grunt tasks etc; no production code change)
 
@@ -30,13 +36,11 @@ blank and other lines should be wrapped at 80 characters.
 * config
 * web-server
 * proxy
-* adapter.jasmine
-* launcher.chrome
 * etc.
 
 The `<scope>` can be empty (eg. if the change is a global or difficult
 to assign to a single component), in which case the parentheses are
-omitted.
+omitted. In smaller projects such as Karma plugins, the `<scope>` is empty.
 
 
 ## Message body
