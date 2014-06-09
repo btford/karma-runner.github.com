@@ -25,6 +25,10 @@
 <body>
   <div id="wrap" class="boxed">
     <header>
+      <div class="flash">
+        <b>Heads Up!</b> You're viewing the docs for <b>v0.8</b>, an old version of Karma.
+        <a href="/0.12/about/versioning.html"><b>v0.12</b> is the newest</a>.
+      </div>
       <div class="container clearfix">
         <div class="six columns">
           <div class="logo"><a href="/0.8/index.html"><img src="/assets/img/banner.png" alt="Karma - Spectacular Test Runner for JavaScript" title="Karma - Spectacular Test Runner for JavaScript"></a></div>
@@ -36,6 +40,8 @@
                 <ul>
                   <li><a href="/0.8/intro/installation.html">Installation</a></li>
                   <li><a href="/0.8/intro/configuration.html">Configuration</a></li>
+                  <li><a href="/0.8/intro/how-it-works.html">How It Works</a></li>
+                  <li><a href="/0.8/intro/faq.html">FAQ</a></li>
                   <li><a href="/0.8/intro/troubleshooting.html">Troubleshooting</a></li>
                 </ul>
               </li>
@@ -45,32 +51,35 @@
                   <li><a href="/0.8/config/files.html">Files</a></li>
                   <li><a href="/0.8/config/browsers.html">Browsers</a></li>
                   <li><a href="/0.8/config/preprocessors.html">Preprocessors</a></li>
-                  <li><a href="/0.8/config/coverage.html">Coverage</a></li>
+                  <li><a href="/0.8/config/plugins.html">Plugins</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">plus</a>
                 <ul>
-                  <li><a href="/0.8/plus/AngularJS.html">AngularJS</a></li>
-                  <li><a href="/0.8/plus/RequireJS.html">RequireJS</a></li>
-                  <li><a href="/0.8/plus/Jenkins-CI.html">Jenkins CI</a></li>
-                  <li><a href="/0.8/plus/Travis-CI.html">Travis CI</a></li>
-                  <li><a href="/0.8/plus/Cloud9.html">Cloud9</a></li>
-                  <li><a href="/0.8/plus/Teamcity.html">Teamcity</a></li>
-                  <li><a href="/0.8/plus/Yeoman.html">Yeoman</a></li>
-                  <li><a href="/0.8/plus/Semaphore-CI.html">Semaphore CI</a></li>
+                  <li><a href="/0.8/plus/requirejs.html">RequireJS</a></li>
+                  <li><a href="/0.8/plus/travis.html">Travis CI</a></li>
+                  <li><a href="/0.8/plus/jenkins.html">Jenkins CI</a></li>
+                  <li><a href="/0.8/plus/semaphore.html">Semaphore CI</a></li>
+                  <li><a href="/0.8/plus/cloud9.html">Cloud9</a></li>
+                  <li><a href="/0.8/plus/angularjs.html">AngularJS</a></li>
+                  <li><a href="/0.8/plus/yeoman.html">Yeoman</a></li>
+                  <li><a href="/0.8/plus/emberjs.html">Ember.js</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">dev</a>
                 <ul>
-                  <li><a href="/0.8/dev/public-api.html">Public Api</a></li>
                   <li><a href="/0.8/dev/contributing.html">Contributing</a></li>
-                  <li><a href="/0.8/dev/git-commit-msg.html">Git Commit Msg</a></li>
+                  <li><a href="/0.8/dev/making-changes.html">Making Changes</a></li>
+                  <li><a href="/0.8/dev/maintaining.html">Maintaining</a></li>
+                  <li><a href="/0.8/dev/public-api.html">Public Api</a></li>
+                  <li><a href="/0.8/dev/plugins.html">Plugins</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="active">about</a>
                 <ul>
-                  <li><a href="/0.8/about/changelog.html">Changelog</a></li>
                   <li><a href="/0.8/about/versioning.html">Versioning</a></li>
+                  <li><a href="/0.8/about/changelog.html">Changelog</a></li>
+                  <li><a href="/0.8/about/migration.html">Migration</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void">v0.8</a>
@@ -91,16 +100,25 @@
     </header>
     <div class="container clearfix">
       <div class="sixteen columns">
-        <h1 class="page-title">Versioning<a href="https://github.com/karma-runner/karma/edit/master/docs/about/02-versioning.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
+        <h1 class="page-title">Versioning<a href="https://github.com/karma-runner/karma/edit/master/docs/about/01-versioning.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p>Karma uses <a href="http://semver.org/">Semantic Versioning</a>.</p>
-<p>All even versions (eg. <code>0.2.x</code>, <code>0.4.x</code>) are considered to be stable - no breaking changes or new features, only bug fixes will pushed into this branch.</p>
+        <div id="markdown" class="sixteen columns bottom"><p>Karma uses <a href="http://semver.org/">Semantic Versioning</a> with a little exception:</p>
+<ul>
+<li>even versions (eg. <code>0.6.x</code>, <code>0.8.x</code>) are considered stable - no breaking changes or new features, only bug fixes will pushed into this branch,</li>
+<li>odd versions (eg. <code>0.7.x</code>, <code>0.9.x</code>) are unstable - anything can happen ;-)</li>
+</ul>
+<p>Therefore it is recommended to rely on the latest stable version, which gives you automatic bug fixes, but does not break you:</p>
+<pre><code class="language-javascript">{
+  <span class="hljs-string">"devDependencies"</span>: {
+    <span class="hljs-string">"karma"</span>: <span class="hljs-string">"~0.10"</span>
+  }
+}</code></pre>
 <h2>Stable channel (branch <code>stable</code>)</h2>
-<pre><code class="language-bash">$ npm install -g karma</code></pre>
+<pre><code class="language-bash">$ npm install karma</code></pre>
 <h2>Canary channel (branch <code>master</code>)</h2>
-<pre><code class="language-bash">$ npm install -g karma@canary</code></pre>
+<pre><code class="language-bash">$ npm install karma@canary</code></pre>
 
         </div>
       </div>

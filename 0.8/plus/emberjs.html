@@ -6,7 +6,7 @@
 <head>
   <!-- Basic Page Needs-->
   <meta charset="utf-8">
-  <title>Karma - Cloud9</title>
+  <title>Karma - Ember.js</title>
   <!-- Mobile specific Metas-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="">
@@ -27,7 +27,7 @@
     <header>
       <div class="flash">
         <b>Heads Up!</b> You're viewing the docs for <b>v0.8</b>, an old version of Karma.
-        <a href="/0.12/plus/cloud9.html"><b>v0.12</b> is the newest</a>.
+        <a href="/0.12/plus/emberjs.html"><b>v0.12</b> is the newest</a>.
       </div>
       <div class="container clearfix">
         <div class="six columns">
@@ -100,29 +100,84 @@
     </header>
     <div class="container clearfix">
       <div class="sixteen columns">
-        <h1 class="page-title">Cloud9<a href="https://github.com/karma-runner/karma/edit/master/docs/plus/05-cloud9.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
+        <h1 class="page-title">Ember.js<a href="https://github.com/karma-runner/karma/edit/master/docs/plus/08-emberjs.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p><a href="https://c9.io/">Cloud9 IDE</a> is an open source web-based cloud integrated development environment that supports
-several programming languages, with a focus on the web stack (specifically JavaScript and NodeJS).
-It is written almost entirely in JavaScript, and uses NodeJS on the back-end.</p>
-<h2>Configuration</h2>
-<p>First, make sure the <code>karma.conf.js</code> includes the following entries:</p>
-<pre><code class="language-javascript">hostname: process.env.IP,
-port: process.env.PORT</code></pre>
-<h2>Capture the browser manually on the local machine</h2>
-<p>You can use any of your local browsers.</p>
-<pre><code class="language-bash"><span class="hljs-comment"># Start Karma without browsers:</span>
-$ karma start --no-browsers</code></pre>
-<p>Now, open <code>http://&lt;projectName&gt;.&lt;cloud9User&gt;.c9.io/</code> in your browser.</p>
-<h2>Run Karma unit tests with PhantomJS</h2>
-<p>It is also possible to run headless PhantomJS on the Cloud9 server.</p>
-<pre><code class="language-bash"><span class="hljs-comment"># Install the PhantomJS plugin:</span>
-$ npm install karma-phantomjs-launcher
+        <div id="markdown" class="sixteen columns bottom"><p>To execute javascript unit and integration tests with ember.js follow the steps below:</p>
+<ol>
+<li><p><a href="../intro/installation.html">install karma</a></p>
+</li>
+<li><p>install the qunit plugin</p>
+<pre><code class="language-bash">npm install karma-qunit --save-dev</code></pre>
+</li>
+<li><p>install the ember preprocessor plugin</p>
+<pre><code class="language-bash">npm install karma-ember-preprocessor --save-dev</code></pre>
+</li>
+<li><p>genenerate a configuration file for karma</p>
+<pre><code class="language-bash">karma init</code></pre>
+<p>note -the above will walk you through the basic setup. An example configuration file that works with ember.js/qunit and phantomjs is below</p>
+<pre><code class="language-javascript">module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(config)</span> {</span>
+ config.set({
+   basePath: <span class="hljs-string">'js'</span>,
 
-<span class="hljs-comment"># Start Karma:</span>
-$ karma start --browsers PhantomJS</code></pre>
+   files: [
+     <span class="hljs-string">'vendor/jquery/jquery.min.js'</span>,
+     <span class="hljs-string">'vendor/handlebars/handlebars.js'</span>,
+     <span class="hljs-string">'vendor/ember/ember.js'</span>,
+     <span class="hljs-string">'app.js'</span>,
+     <span class="hljs-string">'tests/*.js'</span>,
+     <span class="hljs-string">'templates/*.handlebars'</span>
+   ],
+
+   browsers: [<span class="hljs-string">'PhantomJS'</span>],
+   singleRun: <span class="hljs-literal">true</span>,
+   autoWatch: <span class="hljs-literal">false</span>,
+
+   frameworks: [<span class="hljs-string">'qunit'</span>],
+
+   plugins: [
+     <span class="hljs-string">'karma-qunit'</span>,
+     <span class="hljs-string">'karma-ember-preprocessor'</span>,
+     <span class="hljs-string">'karma-phantomjs-launcher'</span>
+   ],
+
+   preprocessors: {
+     <span class="hljs-string">'**/*.handlebars'</span>: <span class="hljs-string">'ember'</span>
+   }
+ });
+};</code></pre>
+<p>Note - the <code>files</code> section above should include all dependencies, ie- jQuery/handlebars/ember.js along with the js and handlebars files required to deploy and run your production ember.js application</p>
+<p>Note - when testing ember applications, it is important that karma not being running the tests until the ember application has finished initialization.  you will need to include a small bootstrap file in the <code>files</code> section above to enforce this.  Here&#39;s an example:</p>
+<pre><code class="language-javascript">__karma__.loaded = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>};
+
+App.setupForTesting();
+App.injectTestHelpers();
+
+<span class="hljs-comment">//this gate/check is required given that standard practice in Ember tests to is to call</span>
+<span class="hljs-comment">//Ember.reset() in the afterEach/tearDown for each test.  Doing so, causes the application</span>
+<span class="hljs-comment">//to 're-initialize', resulting in repeated calls to the initialize function below</span>
+<span class="hljs-keyword">var</span> karma_started = <span class="hljs-literal">false</span>;
+App.initializer({
+   name: <span class="hljs-string">"run tests"</span>,
+   initialize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(container, application)</span> {</span>
+       <span class="hljs-keyword">if</span> (!karma_started) {
+           karma_started = <span class="hljs-literal">true</span>;
+           __karma__.start();
+       }
+   }
+});</code></pre>
+</li>
+<li><p>add a simple qunit test</p>
+<pre><code class="language-javascript">test(<span class="hljs-string">'one should equal one'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+   equal(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-string">'error: one did not equal one'</span>);
+});</code></pre>
+</li>
+<li><p>run the tests with karma from the command line</p>
+<pre><code class="language-bash">karma start</code></pre>
+</li>
+</ol>
+<p>A simple unit / integration tested example app showing karma / qunit / ember in action can be found <a href="https://github.com/toranb/ember-testing-example">here</a></p>
 
         </div>
       </div>

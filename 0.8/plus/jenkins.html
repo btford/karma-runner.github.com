@@ -6,7 +6,7 @@
 <head>
   <!-- Basic Page Needs-->
   <meta charset="utf-8">
-  <title>Karma - Cloud9</title>
+  <title>Karma - Jenkins CI</title>
   <!-- Mobile specific Metas-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="">
@@ -27,7 +27,7 @@
     <header>
       <div class="flash">
         <b>Heads Up!</b> You're viewing the docs for <b>v0.8</b>, an old version of Karma.
-        <a href="/0.12/plus/cloud9.html"><b>v0.12</b> is the newest</a>.
+        <a href="/0.12/plus/jenkins.html"><b>v0.12</b> is the newest</a>.
       </div>
       <div class="container clearfix">
         <div class="six columns">
@@ -100,29 +100,52 @@
     </header>
     <div class="container clearfix">
       <div class="sixteen columns">
-        <h1 class="page-title">Cloud9<a href="https://github.com/karma-runner/karma/edit/master/docs/plus/05-cloud9.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
+        <h1 class="page-title">Jenkins CI<a href="https://github.com/karma-runner/karma/edit/master/docs/plus/03-jenkins.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p><a href="https://c9.io/">Cloud9 IDE</a> is an open source web-based cloud integrated development environment that supports
-several programming languages, with a focus on the web stack (specifically JavaScript and NodeJS).
-It is written almost entirely in JavaScript, and uses NodeJS on the back-end.</p>
-<h2>Configuration</h2>
-<p>First, make sure the <code>karma.conf.js</code> includes the following entries:</p>
-<pre><code class="language-javascript">hostname: process.env.IP,
-port: process.env.PORT</code></pre>
-<h2>Capture the browser manually on the local machine</h2>
-<p>You can use any of your local browsers.</p>
-<pre><code class="language-bash"><span class="hljs-comment"># Start Karma without browsers:</span>
-$ karma start --no-browsers</code></pre>
-<p>Now, open <code>http://&lt;projectName&gt;.&lt;cloud9User&gt;.c9.io/</code> in your browser.</p>
-<h2>Run Karma unit tests with PhantomJS</h2>
-<p>It is also possible to run headless PhantomJS on the Cloud9 server.</p>
-<pre><code class="language-bash"><span class="hljs-comment"># Install the PhantomJS plugin:</span>
-$ npm install karma-phantomjs-launcher
-
-<span class="hljs-comment"># Start Karma:</span>
-$ karma start --browsers PhantomJS</code></pre>
+        <div id="markdown" class="sixteen columns bottom"><p><a href="http://jenkins-ci.org/">Jenkins CI</a> is one of the most popular continuous integration servers
+in the market today. At some point while developing your <a href="http://angularjs.org">AngularJS</a>
+project (hopefully early on), you might want to have automated tests run
+off your code versioning system. Jenkins will help you with this task.
+This tutorial assumes you have Jenkins already setup and running
+on your CI environment.</p>
+<h2>Install Prerequisites</h2>
+<p>You need the following tools installed on your Jenkins CI server:</p>
+<ul>
+<li>Node</li>
+<li>Karma</li>
+</ul>
+<p>Optional we highly suggest to install the following Jenkins plug-in:</p>
+<ul>
+<li><a href="https://wiki.jenkins-ci.org/display/JENKINS/EnvInject+Plugin">EnvInject</a> - it makes things easier under certain linux distributions and user permissions.</li>
+</ul>
+<h2>Configure Karma</h2>
+<p> Make the following additions and changes to your <code>karma.conf.js</code>
+ file as needed:</p>
+<pre><code class="language-javascript">singleRun: <span class="hljs-literal">true</span>,
+reporters: [<span class="hljs-string">'dots'</span>, <span class="hljs-string">'junit'</span>],
+junitReporter: {
+  outputFile: <span class="hljs-string">'test-results.xml'</span>
+},</code></pre>
+<p>Please note the <code>test-result.xml</code> file will be written to the present
+working directory (and you will need to tell Jenkins where to find it).</p>
+<h2>Create a new Jenkins Job</h2>
+<p>In Jenkins, start a new job for Angular/Karma with the basic
+settings (Name, description, parameters, source code repo to pull
+from, etc.)</p>
+<h2>Configure the Build Environment</h2>
+<p>First go to the job page and click on configure. Then in the Build
+Environment sub-section, check the “Inject environment
+variables to the build process” checkbox. A few textboxes will
+appear and in the “Properties Content” box set the following:</p>
+<pre><code class="language-bash">$ PATH=/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin
+$ PHANTOMJS_BIN=/usr/local/bin/phantomjs <span class="hljs-comment">#or wherever PhantomJS happens to be installed</span></code></pre>
+<p>Further down the page, in the Post-build Actions sub-section add a
+<code>Publish JUnit test result report</code> from the Post-build action drop
+down menu. When the textbox labeled Test report XMLs appears, enter
+the path to where the <code>test-results.xml</code> is relative to the root of
+your Jenkins job workspace.</p>
 
         </div>
       </div>

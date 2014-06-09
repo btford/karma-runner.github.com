@@ -25,6 +25,10 @@
 <body>
   <div id="wrap" class="boxed">
     <header>
+      <div class="flash">
+        <b>Heads Up!</b> You're viewing the docs for <b>v0.8</b>, an old version of Karma.
+        <a href="/0.12/config/preprocessors.html"><b>v0.12</b> is the newest</a>.
+      </div>
       <div class="container clearfix">
         <div class="six columns">
           <div class="logo"><a href="/0.8/index.html"><img src="/assets/img/banner.png" alt="Karma - Spectacular Test Runner for JavaScript" title="Karma - Spectacular Test Runner for JavaScript"></a></div>
@@ -36,6 +40,8 @@
                 <ul>
                   <li><a href="/0.8/intro/installation.html">Installation</a></li>
                   <li><a href="/0.8/intro/configuration.html">Configuration</a></li>
+                  <li><a href="/0.8/intro/how-it-works.html">How It Works</a></li>
+                  <li><a href="/0.8/intro/faq.html">FAQ</a></li>
                   <li><a href="/0.8/intro/troubleshooting.html">Troubleshooting</a></li>
                 </ul>
               </li>
@@ -45,32 +51,35 @@
                   <li><a href="/0.8/config/files.html">Files</a></li>
                   <li><a href="/0.8/config/browsers.html">Browsers</a></li>
                   <li><a href="/0.8/config/preprocessors.html">Preprocessors</a></li>
-                  <li><a href="/0.8/config/coverage.html">Coverage</a></li>
+                  <li><a href="/0.8/config/plugins.html">Plugins</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">plus</a>
                 <ul>
-                  <li><a href="/0.8/plus/AngularJS.html">AngularJS</a></li>
-                  <li><a href="/0.8/plus/RequireJS.html">RequireJS</a></li>
-                  <li><a href="/0.8/plus/Jenkins-CI.html">Jenkins CI</a></li>
-                  <li><a href="/0.8/plus/Travis-CI.html">Travis CI</a></li>
-                  <li><a href="/0.8/plus/Cloud9.html">Cloud9</a></li>
-                  <li><a href="/0.8/plus/Teamcity.html">Teamcity</a></li>
-                  <li><a href="/0.8/plus/Yeoman.html">Yeoman</a></li>
-                  <li><a href="/0.8/plus/Semaphore-CI.html">Semaphore CI</a></li>
+                  <li><a href="/0.8/plus/requirejs.html">RequireJS</a></li>
+                  <li><a href="/0.8/plus/travis.html">Travis CI</a></li>
+                  <li><a href="/0.8/plus/jenkins.html">Jenkins CI</a></li>
+                  <li><a href="/0.8/plus/semaphore.html">Semaphore CI</a></li>
+                  <li><a href="/0.8/plus/cloud9.html">Cloud9</a></li>
+                  <li><a href="/0.8/plus/angularjs.html">AngularJS</a></li>
+                  <li><a href="/0.8/plus/yeoman.html">Yeoman</a></li>
+                  <li><a href="/0.8/plus/emberjs.html">Ember.js</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">dev</a>
                 <ul>
-                  <li><a href="/0.8/dev/public-api.html">Public Api</a></li>
                   <li><a href="/0.8/dev/contributing.html">Contributing</a></li>
-                  <li><a href="/0.8/dev/git-commit-msg.html">Git Commit Msg</a></li>
+                  <li><a href="/0.8/dev/making-changes.html">Making Changes</a></li>
+                  <li><a href="/0.8/dev/maintaining.html">Maintaining</a></li>
+                  <li><a href="/0.8/dev/public-api.html">Public Api</a></li>
+                  <li><a href="/0.8/dev/plugins.html">Plugins</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">about</a>
                 <ul>
-                  <li><a href="/0.8/about/changelog.html">Changelog</a></li>
                   <li><a href="/0.8/about/versioning.html">Versioning</a></li>
+                  <li><a href="/0.8/about/changelog.html">Changelog</a></li>
+                  <li><a href="/0.8/about/migration.html">Migration</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void">v0.8</a>
@@ -96,27 +105,64 @@
       </div>
       <div class="page-columns">
         <div id="markdown" class="sixteen columns bottom"><p>Preprocessors in Karma allow you to do some work with your files before
-they get served to the browser. The configuration of these happens in this block
-in the config file.</p>
-<pre><code class="language-javascript">preprocessors = {
-  <span class="string">'**/*.coffee'</span>: <span class="string">'coffee'</span>,
-  <span class="string">'**/*.html'</span>: <span class="string">'html2js'</span>
-};</code></pre>
+they get served to the browser. These are configured in the <code>preprocessors</code> block
+of the configuration file:</p>
+<pre><code class="language-javascript">preprocessors: {
+  <span class="hljs-string">'**/*.coffee'</span>: [<span class="hljs-string">'coffee'</span>],
+  <span class="hljs-string">'**/*.tea'</span>: [<span class="hljs-string">'coffee'</span>],
+  <span class="hljs-string">'**/*.html'</span>: [<span class="hljs-string">'html2js'</span>]
+},</code></pre>
+<p>Note the multiple expressions referencing the &quot;coffee&quot; preprocessor, as a preprocessor can be listed more than once,
+as another way to specify multiple file path expressions.</p>
+<div class="alert alert-success"><h4 class="alert-heading">Note: </h4>Most of the preprocessors need to be loaded as <a href="plugins.html">plugins</a>.
+
+</div>
 <h2>Available Preprocessors</h2>
 <ul>
-<li><a href="https://github.com/karma-runner/karma/blob/v0.5.8/lib/preprocessors/Coffee.js">coffee</a></li>
-<li><a href="https://github.com/karma-runner/karma/blob/v0.5.8/lib/preprocessors/Live.js">live</a></li>
-<li><a href="https://github.com/karma-runner/karma/blob/v0.5.8/lib/preprocessors/Html2js.js">html2js</a></li>
-<li><a href="https://github.com/karma-runner/karma/blob/v0.5.8/lib/preprocessors/Coverage.js">coverage</a></li>
+<li><a href="https://github.com/karma-runner/karma-coffee-preprocessor">coffee</a></li>
+<li><a href="https://github.com/karma-runner/karma-html2js-preprocessor">html2js</a><ul>
+<li>Note any .html files listed in the files section must be referenced at run time as <code>window.__html__[&#39;template.html&#39;]</code>. <a href="html2js">Learn more</a>.</li>
+<li>If this preprocessor is disabled, included .html files will need <code>base/</code> added to beginning of their path reference. See <a href="https://github.com/karma-runner/karma/issues/788">discussion in issue 788</a>.</li>
 </ul>
+</li>
+<li><a href="https://github.com/karma-runner/karma-coverage">coverage</a></li>
+<li><a href="https://github.com/karma-runner/karma-ng-html2js-preprocessor">ng-html2js</a></li>
+<li><a href="https://www.npmjs.org/browse/keyword/karma-preprocessor">many more</a></li>
+</ul>
+<p>Here&#39;s an example of how to add the CoffeScript preprocessor to your testing suite:</p>
+<pre><code class="language-bash"><span class="hljs-comment"># Install it first with NPM</span>
+$ npm install karma-coffee-preprocessor --save-dev</code></pre>
+<p>And then inside your configuration file...</p>
+<pre><code class="language-javascript">module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(config)</span> {</span>
+  config.set({
+    preprocessors: {
+      <span class="hljs-string">'**/*.coffee'</span>: [<span class="hljs-string">'coffee'</span>]
+    }
+  });
+};</code></pre>
+<p>Of course, you can write <a href="../dev/plugins.html">custom plugins</a> too!</p>
+<h2>Configured Preprocessors</h2>
+<p>Some of the preprocessors can be also configured:</p>
+<pre><code class="language-javascript">coffeePreprocessor: {
+  options: {
+    bare: <span class="hljs-literal">false</span>
+  }
+}</code></pre>
+<p>Or define a configured preprocessor:</p>
+<pre><code class="language-javascript">customPreprocessors: {
+  bare_coffee: {
+    base: <span class="hljs-string">'coffee'</span>,
+    options: {bare: <span class="hljs-literal">true</span>}
+  }
+}</code></pre>
 <h2>Minimatching</h2>
 <p>The keys of the preprocessors config object are used to filter the files specified in
 the <code>files</code> configuration.</p>
 <ul>
 <li>First the file paths are expanded to an absolute path, based on the
-<code>basePath</code> config and the directory of the configuration file. See
+<code>basePath</code> configuration and the directory of the configuration file. See
 <a href="files.html">files</a> for more information on that.</li>
-<li>Second this expanded path is matched using <a href="https://github.com/isaacs/minimatch">minimatch</a> against the
+<li>Then the newly expanded path is matched using <a href="https://github.com/isaacs/minimatch">minimatch</a> against the
 specified key.</li>
 </ul>
 <p>So for example the path <code>/my/absolute/path/to/test/unit/file.coffee</code> matched against

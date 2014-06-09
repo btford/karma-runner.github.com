@@ -6,7 +6,7 @@
 <head>
   <!-- Basic Page Needs-->
   <meta charset="utf-8">
-  <title>Karma - Cloud9</title>
+  <title>Karma - Maintaining Karma</title>
   <!-- Mobile specific Metas-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="">
@@ -27,7 +27,7 @@
     <header>
       <div class="flash">
         <b>Heads Up!</b> You're viewing the docs for <b>v0.8</b>, an old version of Karma.
-        <a href="/0.12/plus/cloud9.html"><b>v0.12</b> is the newest</a>.
+        <a href="/0.12/dev/maintaining.html"><b>v0.12</b> is the newest</a>.
       </div>
       <div class="container clearfix">
         <div class="six columns">
@@ -54,7 +54,7 @@
                   <li><a href="/0.8/config/plugins.html">Plugins</a></li>
                 </ul>
               </li>
-              <li><a href="javascript:void" class="active">plus</a>
+              <li><a href="javascript:void" class="">plus</a>
                 <ul>
                   <li><a href="/0.8/plus/requirejs.html">RequireJS</a></li>
                   <li><a href="/0.8/plus/travis.html">Travis CI</a></li>
@@ -66,7 +66,7 @@
                   <li><a href="/0.8/plus/emberjs.html">Ember.js</a></li>
                 </ul>
               </li>
-              <li><a href="javascript:void" class="">dev</a>
+              <li><a href="javascript:void" class="active">dev</a>
                 <ul>
                   <li><a href="/0.8/dev/contributing.html">Contributing</a></li>
                   <li><a href="/0.8/dev/making-changes.html">Making Changes</a></li>
@@ -100,29 +100,65 @@
     </header>
     <div class="container clearfix">
       <div class="sixteen columns">
-        <h1 class="page-title">Cloud9<a href="https://github.com/karma-runner/karma/edit/master/docs/plus/05-cloud9.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
+        <h1 class="page-title">Maintaining Karma<a href="https://github.com/karma-runner/karma/edit/master/docs/dev/03-maintaining.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p><a href="https://c9.io/">Cloud9 IDE</a> is an open source web-based cloud integrated development environment that supports
-several programming languages, with a focus on the web stack (specifically JavaScript and NodeJS).
-It is written almost entirely in JavaScript, and uses NodeJS on the back-end.</p>
-<h2>Configuration</h2>
-<p>First, make sure the <code>karma.conf.js</code> includes the following entries:</p>
-<pre><code class="language-javascript">hostname: process.env.IP,
-port: process.env.PORT</code></pre>
-<h2>Capture the browser manually on the local machine</h2>
-<p>You can use any of your local browsers.</p>
-<pre><code class="language-bash"><span class="hljs-comment"># Start Karma without browsers:</span>
-$ karma start --no-browsers</code></pre>
-<p>Now, open <code>http://&lt;projectName&gt;.&lt;cloud9User&gt;.c9.io/</code> in your browser.</p>
-<h2>Run Karma unit tests with PhantomJS</h2>
-<p>It is also possible to run headless PhantomJS on the Cloud9 server.</p>
-<pre><code class="language-bash"><span class="hljs-comment"># Install the PhantomJS plugin:</span>
-$ npm install karma-phantomjs-launcher
-
-<span class="hljs-comment"># Start Karma:</span>
-$ karma start --browsers PhantomJS</code></pre>
+        <div id="markdown" class="sixteen columns bottom"><p>This document is for people working on Karma. It describes common tasks such as triaging or merging
+pull requests.</p>
+<p>If you are interested in contributing to Karma, you might check out <a href="./contributing.html">Contributing to Karma</a>.</p>
+<p>We use <a href="https://gitter.im/karma-runner">gitter/karma-runner</a> to talk about pull requests and issues, stuff like,
+“hey this is important, can you look into it...”, “I’m not sure what to do about this issue...”.</p>
+<h2>Triaging issues</h2>
+<p>New issues pop up every day. We need to identify urgent issues (such as “nobody can install karma”),
+close duplicates, answer questions, etc.</p>
+<p>See <a href="https://github.com/angular/angular.js/blob/master/TRIAGING.md">angular/TRIAGING.md</a> for more info.</p>
+<p>An issue or pull request is untriaged (needs to be triaged) when it is not assigned to any milestone.</p>
+<h2>Merging a pull request</h2>
+<p>Please, make sure:</p>
+<ul>
+<li>Travis build is green.</li>
+<li>At least one owner (other than you) approved the PR<ul>
+<li>by commenting “LGTM” or something like that.</li>
+<li>if it’s just a simple docs change or a typo fix, feel free to skip this step.</li>
+</ul>
+</li>
+<li>All the commits follow the <a href="http://karma-runner.github.io/0.12/dev/git-commit-msg.html">convention</a>.<ul>
+<li>This is very important, because the auto-release tasks depend on it.</li>
+<li>Commits are squashed. Each change is a single commit.<ul>
+<li>e.g. if the PR contains two changes such as, <code>fix(web-server): xxx</code> and then <code>style(web-server): missing semicolons</code>; it should be two separate changes</li>
+<li>e.g. if the first commit is <code>fix(web-server): serve binary files</code> and a second commit is “fix unit tests broken in the previous commit”, you should squash them into a single commit.</li>
+</ul>
+</li>
+<li>It’s alright to ask the author of the pull request to fix any of the above.</li>
+</ul>
+</li>
+</ul>
+<h3>There are two branches:</h3>
+<ul>
+<li><strong>master</strong> is what gets automatically released into the “canary” channel (<code>npm install karma@canary</code>).</li>
+<li><strong>stable</strong> is what gets automatically released into the “stable” channel (<code>npm install karma</code>)</li>
+</ul>
+<p>Once the PR is ready to be merged, merge it into the master.
+You can use the “green button” on GitHub.</p>
+<p>If it’s a bug fix or just a documentation change that is relevant to the current stable branch,
+please cherry pick the change to the stable branch too.</p>
+<p><strong>No new features or breaking changes can go into the stable branch.</strong></p>
+<p>An easy way to merge a pull request is to use the <a href="https://github.com/vojtajina/dotfiles/blob/master/bin/fetch_pr">fetch_pr</a> and <a href="https://github.com/vojtajina/dotfiles/blob/master/bin/merge_pr">merge_pr</a> scripts.</p>
+<h2>Ownership</h2>
+<p>Every project has one or more owners (or “maintainers”), listed in <code>owners</code> field of the
+<code>package.json</code>. Typically, owners have push permissions.</p>
+<p>Being a maintainer of one plugin doesn’t mean you can’t contribute to some other plugins.
+In fact, you can be a maintainer of multiple projects. The main point is to have people who are
+familiar with the codebase and therefore can better decide what is a good change or not.</p>
+<h2>Becoming a maintainer</h2>
+<p>If you are interest in becoming a Karma maintainer, start by triaging issues, reviewing pull
+requests and stop by at <a href="https://gitter.im/karma-runner">gitter/karma-runner</a>. Once we see you are helping, we will give you push
+permissions. Being a maintainer is not an obligation. You can help when you have time and be less
+active when you don’t. If you get a new job and get busy, that’s alright.</p>
+<p>These are all just recommendations, something we found to be helpful for us to be more efficient.
+Nothing is set in a stone. If you feel like there is a way to improve this workflow,
+please send a proposal to <a href="mailto:karma-devs@googlegroups.com">karma-devs@googlegroups.com</a>.</p>
 
         </div>
       </div>

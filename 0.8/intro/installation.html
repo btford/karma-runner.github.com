@@ -25,6 +25,10 @@
 <body>
   <div id="wrap" class="boxed">
     <header>
+      <div class="flash">
+        <b>Heads Up!</b> You're viewing the docs for <b>v0.8</b>, an old version of Karma.
+        <a href="/0.12/intro/installation.html"><b>v0.12</b> is the newest</a>.
+      </div>
       <div class="container clearfix">
         <div class="six columns">
           <div class="logo"><a href="/0.8/index.html"><img src="/assets/img/banner.png" alt="Karma - Spectacular Test Runner for JavaScript" title="Karma - Spectacular Test Runner for JavaScript"></a></div>
@@ -36,6 +40,8 @@
                 <ul>
                   <li><a href="/0.8/intro/installation.html">Installation</a></li>
                   <li><a href="/0.8/intro/configuration.html">Configuration</a></li>
+                  <li><a href="/0.8/intro/how-it-works.html">How It Works</a></li>
+                  <li><a href="/0.8/intro/faq.html">FAQ</a></li>
                   <li><a href="/0.8/intro/troubleshooting.html">Troubleshooting</a></li>
                 </ul>
               </li>
@@ -45,32 +51,35 @@
                   <li><a href="/0.8/config/files.html">Files</a></li>
                   <li><a href="/0.8/config/browsers.html">Browsers</a></li>
                   <li><a href="/0.8/config/preprocessors.html">Preprocessors</a></li>
-                  <li><a href="/0.8/config/coverage.html">Coverage</a></li>
+                  <li><a href="/0.8/config/plugins.html">Plugins</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">plus</a>
                 <ul>
-                  <li><a href="/0.8/plus/AngularJS.html">AngularJS</a></li>
-                  <li><a href="/0.8/plus/RequireJS.html">RequireJS</a></li>
-                  <li><a href="/0.8/plus/Jenkins-CI.html">Jenkins CI</a></li>
-                  <li><a href="/0.8/plus/Travis-CI.html">Travis CI</a></li>
-                  <li><a href="/0.8/plus/Cloud9.html">Cloud9</a></li>
-                  <li><a href="/0.8/plus/Teamcity.html">Teamcity</a></li>
-                  <li><a href="/0.8/plus/Yeoman.html">Yeoman</a></li>
-                  <li><a href="/0.8/plus/Semaphore-CI.html">Semaphore CI</a></li>
+                  <li><a href="/0.8/plus/requirejs.html">RequireJS</a></li>
+                  <li><a href="/0.8/plus/travis.html">Travis CI</a></li>
+                  <li><a href="/0.8/plus/jenkins.html">Jenkins CI</a></li>
+                  <li><a href="/0.8/plus/semaphore.html">Semaphore CI</a></li>
+                  <li><a href="/0.8/plus/cloud9.html">Cloud9</a></li>
+                  <li><a href="/0.8/plus/angularjs.html">AngularJS</a></li>
+                  <li><a href="/0.8/plus/yeoman.html">Yeoman</a></li>
+                  <li><a href="/0.8/plus/emberjs.html">Ember.js</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">dev</a>
                 <ul>
-                  <li><a href="/0.8/dev/public-api.html">Public Api</a></li>
                   <li><a href="/0.8/dev/contributing.html">Contributing</a></li>
-                  <li><a href="/0.8/dev/git-commit-msg.html">Git Commit Msg</a></li>
+                  <li><a href="/0.8/dev/making-changes.html">Making Changes</a></li>
+                  <li><a href="/0.8/dev/maintaining.html">Maintaining</a></li>
+                  <li><a href="/0.8/dev/public-api.html">Public Api</a></li>
+                  <li><a href="/0.8/dev/plugins.html">Plugins</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">about</a>
                 <ul>
-                  <li><a href="/0.8/about/changelog.html">Changelog</a></li>
                   <li><a href="/0.8/about/versioning.html">Versioning</a></li>
+                  <li><a href="/0.8/about/changelog.html">Changelog</a></li>
+                  <li><a href="/0.8/about/migration.html">Migration</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void">v0.8</a>
@@ -95,25 +104,32 @@
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p>Karma runs on <a href="http://nodejs.org/">Node.js</a> and is available as a node module via <a href="https://npmjs.org/">NPM</a>.</p>
-<h2>Requirements</h2>
-<p>First, you need to install <a href="http://nodejs.org/">Node.js</a>. There are installers for both
-Mac and Windows. On Linux, we recommend using <a href="https://github.com/creationix/nvm">NVM</a>.</p>
-<h2>Global Installation</h2>
-<p>This is the recommended way. It will install Karma into your
-global <code>node_modules</code> directory and create a symlink to its binary.</p>
-<pre><code class="language-bash">$ npm install -g karma
+        <div id="markdown" class="sixteen columns bottom"><p>Karma runs on <a href="http://nodejs.org/">Node.js</a> and is available as an <a href="npmjs.org/package/karma">NPM</a> package.</p>
+<h2>Installing Node.js</h2>
+<p>There are <a href="http://nodejs.org/download/">installers</a> for both Mac and Windows.
+On Linux, we recommend using <a href="https://github.com/creationix/nvm">NVM</a>.</p>
+<div class="alert alert-success"><h4 class="alert-heading">Note: </h4>Karma works on the two latest stable versions. That is <strong>0.8.x</strong> and <strong>0.10.x</strong> at this point.
 
-<span class="comment"># Start Karma</span>
-$ karma start</code></pre>
-<h2>Local Installation</h2>
-<p>A local installation will install Karma into your current
-directory&#39;s <code>node_modules</code>. That allows you to have different
-versions for different projects.</p>
-<pre><code class="language-bash">$ npm install karma
 
-<span class="comment"># Start Karma</span>
-$ ./node_modules/.bin/karma start</code></pre>
+</div>
+<h2>Installing Karma and plugins</h2>
+<p>The recommended approach is to install Karma (and all the plugins your project needs) locally in
+the project&#39;s directory.</p>
+<pre><code class="language-bash"><span class="hljs-comment"># Install Karma:</span>
+$ npm install karma --save-dev
+
+<span class="hljs-comment"># Install plugins that your project needs:</span>
+$ npm install karma-jasmine karma-chrome-launcher --save-dev</code></pre>
+<p>This will install <code>karma</code>, <code>karma-jasmine</code> and <code>karma-chrome-launcher</code> packages into <code>node_modules</code> in your current
+working directory and also save these as <code>devDependencies</code> in <code>package.json</code>, so that any
+other developer working on the project will only have to do <code>npm install</code> in order to get all these
+dependencies installed.</p>
+<pre><code class="language-bash"><span class="hljs-comment"># Run Karma:</span>
+$ ./node_modules/karma/bin/karma start</code></pre>
+<h2>Commandline Interface</h2>
+<p>Typing <code>./node_modules/karma/bin/karma start</code> sucks and so you might find it useful to install <code>karma-cli</code> globally.</p>
+<pre><code class="language-bash">$ npm install -g karma-cli</code></pre>
+<p>Then, you can run Karma simply by <code>karma</code> from anywhere and it will always run the local version.</p>
 
         </div>
       </div>

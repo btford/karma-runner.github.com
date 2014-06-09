@@ -25,6 +25,10 @@
 <body>
   <div id="wrap" class="boxed">
     <header>
+      <div class="flash">
+        <b>Heads Up!</b> You're viewing the docs for <b>v0.8</b>, an old version of Karma.
+        <a href="/0.12/index.html"><b>v0.12</b> is the newest</a>.
+      </div>
       <div class="container clearfix">
         <div class="six columns">
           <div class="logo"><a href="/0.8/index.html"><img src="/assets/img/banner.png" alt="Karma - Spectacular Test Runner for JavaScript" title="Karma - Spectacular Test Runner for JavaScript"></a></div>
@@ -36,6 +40,8 @@
                 <ul>
                   <li><a href="/0.8/intro/installation.html">Installation</a></li>
                   <li><a href="/0.8/intro/configuration.html">Configuration</a></li>
+                  <li><a href="/0.8/intro/how-it-works.html">How It Works</a></li>
+                  <li><a href="/0.8/intro/faq.html">FAQ</a></li>
                   <li><a href="/0.8/intro/troubleshooting.html">Troubleshooting</a></li>
                 </ul>
               </li>
@@ -45,32 +51,35 @@
                   <li><a href="/0.8/config/files.html">Files</a></li>
                   <li><a href="/0.8/config/browsers.html">Browsers</a></li>
                   <li><a href="/0.8/config/preprocessors.html">Preprocessors</a></li>
-                  <li><a href="/0.8/config/coverage.html">Coverage</a></li>
+                  <li><a href="/0.8/config/plugins.html">Plugins</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">plus</a>
                 <ul>
-                  <li><a href="/0.8/plus/AngularJS.html">AngularJS</a></li>
-                  <li><a href="/0.8/plus/RequireJS.html">RequireJS</a></li>
-                  <li><a href="/0.8/plus/Jenkins-CI.html">Jenkins CI</a></li>
-                  <li><a href="/0.8/plus/Travis-CI.html">Travis CI</a></li>
-                  <li><a href="/0.8/plus/Cloud9.html">Cloud9</a></li>
-                  <li><a href="/0.8/plus/Teamcity.html">Teamcity</a></li>
-                  <li><a href="/0.8/plus/Yeoman.html">Yeoman</a></li>
-                  <li><a href="/0.8/plus/Semaphore-CI.html">Semaphore CI</a></li>
+                  <li><a href="/0.8/plus/requirejs.html">RequireJS</a></li>
+                  <li><a href="/0.8/plus/travis.html">Travis CI</a></li>
+                  <li><a href="/0.8/plus/jenkins.html">Jenkins CI</a></li>
+                  <li><a href="/0.8/plus/semaphore.html">Semaphore CI</a></li>
+                  <li><a href="/0.8/plus/cloud9.html">Cloud9</a></li>
+                  <li><a href="/0.8/plus/angularjs.html">AngularJS</a></li>
+                  <li><a href="/0.8/plus/yeoman.html">Yeoman</a></li>
+                  <li><a href="/0.8/plus/emberjs.html">Ember.js</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">dev</a>
                 <ul>
-                  <li><a href="/0.8/dev/public-api.html">Public Api</a></li>
                   <li><a href="/0.8/dev/contributing.html">Contributing</a></li>
-                  <li><a href="/0.8/dev/git-commit-msg.html">Git Commit Msg</a></li>
+                  <li><a href="/0.8/dev/making-changes.html">Making Changes</a></li>
+                  <li><a href="/0.8/dev/maintaining.html">Maintaining</a></li>
+                  <li><a href="/0.8/dev/public-api.html">Public Api</a></li>
+                  <li><a href="/0.8/dev/plugins.html">Plugins</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">about</a>
                 <ul>
-                  <li><a href="/0.8/about/changelog.html">Changelog</a></li>
                   <li><a href="/0.8/about/versioning.html">Versioning</a></li>
+                  <li><a href="/0.8/about/changelog.html">Changelog</a></li>
+                  <li><a href="/0.8/about/migration.html">Migration</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void">v0.8</a>
@@ -156,7 +165,7 @@ productive and <a href="http://vimeo.com/36579366">creative</a>.</p>
           <li class="one-third column">
             <div class="icon-box"><i class="icon-globe icon-2x"></i></div>
             <h3>Testing Framework Agnostic</h3>
-            <p><p>Describe your tests with <a href="http://pivotal.github.com/jasmine/">Jasmine</a>,
+            <p><p>Describe your tests with <a href="http://jasmine.github.io/">Jasmine</a>,
 <a href="http://visionmedia.github.com/mocha/">Mocha</a>,
 <a href="http://qunitjs.com/">QUnit</a>, or write a simple adapter for any framework you like.</p>
 

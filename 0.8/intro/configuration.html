@@ -25,6 +25,10 @@
 <body>
   <div id="wrap" class="boxed">
     <header>
+      <div class="flash">
+        <b>Heads Up!</b> You're viewing the docs for <b>v0.8</b>, an old version of Karma.
+        <a href="/0.12/intro/configuration.html"><b>v0.12</b> is the newest</a>.
+      </div>
       <div class="container clearfix">
         <div class="six columns">
           <div class="logo"><a href="/0.8/index.html"><img src="/assets/img/banner.png" alt="Karma - Spectacular Test Runner for JavaScript" title="Karma - Spectacular Test Runner for JavaScript"></a></div>
@@ -36,6 +40,8 @@
                 <ul>
                   <li><a href="/0.8/intro/installation.html">Installation</a></li>
                   <li><a href="/0.8/intro/configuration.html">Configuration</a></li>
+                  <li><a href="/0.8/intro/how-it-works.html">How It Works</a></li>
+                  <li><a href="/0.8/intro/faq.html">FAQ</a></li>
                   <li><a href="/0.8/intro/troubleshooting.html">Troubleshooting</a></li>
                 </ul>
               </li>
@@ -45,32 +51,35 @@
                   <li><a href="/0.8/config/files.html">Files</a></li>
                   <li><a href="/0.8/config/browsers.html">Browsers</a></li>
                   <li><a href="/0.8/config/preprocessors.html">Preprocessors</a></li>
-                  <li><a href="/0.8/config/coverage.html">Coverage</a></li>
+                  <li><a href="/0.8/config/plugins.html">Plugins</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">plus</a>
                 <ul>
-                  <li><a href="/0.8/plus/AngularJS.html">AngularJS</a></li>
-                  <li><a href="/0.8/plus/RequireJS.html">RequireJS</a></li>
-                  <li><a href="/0.8/plus/Jenkins-CI.html">Jenkins CI</a></li>
-                  <li><a href="/0.8/plus/Travis-CI.html">Travis CI</a></li>
-                  <li><a href="/0.8/plus/Cloud9.html">Cloud9</a></li>
-                  <li><a href="/0.8/plus/Teamcity.html">Teamcity</a></li>
-                  <li><a href="/0.8/plus/Yeoman.html">Yeoman</a></li>
-                  <li><a href="/0.8/plus/Semaphore-CI.html">Semaphore CI</a></li>
+                  <li><a href="/0.8/plus/requirejs.html">RequireJS</a></li>
+                  <li><a href="/0.8/plus/travis.html">Travis CI</a></li>
+                  <li><a href="/0.8/plus/jenkins.html">Jenkins CI</a></li>
+                  <li><a href="/0.8/plus/semaphore.html">Semaphore CI</a></li>
+                  <li><a href="/0.8/plus/cloud9.html">Cloud9</a></li>
+                  <li><a href="/0.8/plus/angularjs.html">AngularJS</a></li>
+                  <li><a href="/0.8/plus/yeoman.html">Yeoman</a></li>
+                  <li><a href="/0.8/plus/emberjs.html">Ember.js</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">dev</a>
                 <ul>
-                  <li><a href="/0.8/dev/public-api.html">Public Api</a></li>
                   <li><a href="/0.8/dev/contributing.html">Contributing</a></li>
-                  <li><a href="/0.8/dev/git-commit-msg.html">Git Commit Msg</a></li>
+                  <li><a href="/0.8/dev/making-changes.html">Making Changes</a></li>
+                  <li><a href="/0.8/dev/maintaining.html">Maintaining</a></li>
+                  <li><a href="/0.8/dev/public-api.html">Public Api</a></li>
+                  <li><a href="/0.8/dev/plugins.html">Plugins</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">about</a>
                 <ul>
-                  <li><a href="/0.8/about/changelog.html">Changelog</a></li>
                   <li><a href="/0.8/about/versioning.html">Versioning</a></li>
+                  <li><a href="/0.8/about/changelog.html">Changelog</a></li>
+                  <li><a href="/0.8/about/migration.html">Migration</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void">v0.8</a>
@@ -95,26 +104,65 @@
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p>In order to serve you well, Karma needs to know about your
-project. That&#39;s done through a configuration file.</p>
-<p>For an example file, see <a href="https://github.com/karma-runner/karma/blob/v0.8.5/test/client/karma.conf.js">test/client/karma.conf.js</a>
-which contains most of the options.</p>
+        <div id="markdown" class="sixteen columns bottom"><p>In order to serve you well, Karma needs to know about your project in order to test it
+and this is done via a configuration file. This page explains how to create such a configuration file.</p>
+<p>See <a href="../config/configuration-file.html">configuration file docs</a> for more information about the syntax and all the available options.</p>
 <h2>Generating the config file</h2>
-<p>You can write the config file by hand or copy paste it from another project.</p>
-<p>A third way is to use <code>karma init</code> to generate it.</p>
-<pre><code class="language-bash"><span class="comment"># This will ask you a few questions and generate a new config file</span>
-<span class="comment"># called my.conf.js</span>
-$ karma init my.conf.js</code></pre>
+<p>The configuration file can be generated using <code>karma init</code>:</p>
+<pre><code class="language-bash">$ karma init my.conf.js
+
+Which testing framework <span class="hljs-keyword">do</span> you want to use ?
+Press tab to list possible options. Enter to move to the next question.
+&gt; jasmine
+
+Do you want to use Require.js ?
+This will add Require.js plugin.
+Press tab to list possible options. Enter to move to the next question.
+&gt; no
+
+Do you want to capture a browser automatically ?
+Press tab to list possible options. Enter empty string to move to the next question.
+&gt; Chrome
+&gt; Firefox
+&gt;
+
+What is the location of your <span class="hljs-built_in">source</span> and test files ?
+You can use glob patterns, eg. <span class="hljs-string">"js/*.js"</span> or <span class="hljs-string">"test/**/*Spec.js"</span>.
+Enter empty string to move to the next question.
+&gt; *.js
+&gt; test/**/*.js
+&gt;
+
+Should any of the files included by the previous patterns be excluded ?
+You can use glob patterns, eg. <span class="hljs-string">"**/*.swp"</span>.
+Enter empty string to move to the next question.
+&gt;
+
+Do you want Karma to watch all the files and run the tests on change ?
+Press tab to list possible options.
+&gt; yes
+
+Config file generated at <span class="hljs-string">"/Users/vojta/Code/karma/my.conf.js"</span>.</code></pre>
+<p>The configuration file can be written in CoffeeScript as well.
+In fact, if you execute <code>karma init</code> with a <code>*.coffee</code> extension such as <code>karma init karma.conf.coffee</code>, it will generate a CoffeeScript file.</p>
+<p>Of course, you can write the config file by hand or copy paste it from another project ;-)</p>
 <h2>Starting Karma</h2>
-<p>When starting Karma, you can pass a path to the configuration file as an argument.</p>
-<p>By default, Karma will look for <code>karma.conf.js</code> in the current directory.</p>
-<pre><code class="language-bash"><span class="comment"># Start Karma using your configuration</span>
+<p>When starting Karma, the configuration file path can be passed in as the first argument.</p>
+<p>By default, Karma will look for <code>karma.conf.js</code> or <code>karma.conf.coffee</code> in the current directory.</p>
+<pre><code class="language-bash"><span class="hljs-comment"># Start Karma using your configuration:</span>
 $ karma start my.conf.js</code></pre>
-<p>For more info about configuration file, see the <a href="../config/configuration-file.html">configuration file docs</a>.</p>
+<p>For more detailed information about the Karma configuration file, such as available options and features,
+please read the <a href="../config/configuration-file.html">configuration file docs</a>.</p>
 <h2>Command line arguments</h2>
-<p>Some of the configurations can be specified as a command line argument, which
-overrides the configuration from the config file.</p>
+<p>Some configurations, which are already present within the configuration file, can be overridden by specifying the configuration
+as a command line argument for when Karma is executed.</p>
+<pre><code class="language-bash">karma start karma-conf.js --log-level debug --single-run</code></pre>
 <p>Try <code>karma start --help</code> if you want to see all available options.</p>
+<h2>Integrating with Grunt/Gulp</h2>
+<ul>
+<li><a href="https://github.com/karma-runner/grunt-karma">grunt-karma</a></li>
+<li><a href="https://github.com/lazd/gulp-karma">gulp-karma</a></li>
+</ul>
 
         </div>
       </div>

@@ -6,7 +6,7 @@
 <head>
   <!-- Basic Page Needs-->
   <meta charset="utf-8">
-  <title>Karma - Cloud9</title>
+  <title>Karma - Frequently Asked Questions</title>
   <!-- Mobile specific Metas-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="">
@@ -27,7 +27,7 @@
     <header>
       <div class="flash">
         <b>Heads Up!</b> You're viewing the docs for <b>v0.8</b>, an old version of Karma.
-        <a href="/0.12/plus/cloud9.html"><b>v0.12</b> is the newest</a>.
+        <a href="/0.12/intro/faq.html"><b>v0.12</b> is the newest</a>.
       </div>
       <div class="container clearfix">
         <div class="six columns">
@@ -36,7 +36,7 @@
         <div class="ten columns">
           <nav id="menu" class="navigation">
             <ul id="nav">
-              <li><a href="javascript:void" class="">intro</a>
+              <li><a href="javascript:void" class="active">intro</a>
                 <ul>
                   <li><a href="/0.8/intro/installation.html">Installation</a></li>
                   <li><a href="/0.8/intro/configuration.html">Configuration</a></li>
@@ -54,7 +54,7 @@
                   <li><a href="/0.8/config/plugins.html">Plugins</a></li>
                 </ul>
               </li>
-              <li><a href="javascript:void" class="active">plus</a>
+              <li><a href="javascript:void" class="">plus</a>
                 <ul>
                   <li><a href="/0.8/plus/requirejs.html">RequireJS</a></li>
                   <li><a href="/0.8/plus/travis.html">Travis CI</a></li>
@@ -100,29 +100,25 @@
     </header>
     <div class="container clearfix">
       <div class="sixteen columns">
-        <h1 class="page-title">Cloud9<a href="https://github.com/karma-runner/karma/edit/master/docs/plus/05-cloud9.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
+        <h1 class="page-title">Frequently Asked Questions<a href="https://github.com/karma-runner/karma/edit/master/docs/intro/04-faq.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p><a href="https://c9.io/">Cloud9 IDE</a> is an open source web-based cloud integrated development environment that supports
-several programming languages, with a focus on the web stack (specifically JavaScript and NodeJS).
-It is written almost entirely in JavaScript, and uses NodeJS on the back-end.</p>
-<h2>Configuration</h2>
-<p>First, make sure the <code>karma.conf.js</code> includes the following entries:</p>
-<pre><code class="language-javascript">hostname: process.env.IP,
-port: process.env.PORT</code></pre>
-<h2>Capture the browser manually on the local machine</h2>
-<p>You can use any of your local browsers.</p>
-<pre><code class="language-bash"><span class="hljs-comment"># Start Karma without browsers:</span>
-$ karma start --no-browsers</code></pre>
-<p>Now, open <code>http://&lt;projectName&gt;.&lt;cloud9User&gt;.c9.io/</code> in your browser.</p>
-<h2>Run Karma unit tests with PhantomJS</h2>
-<p>It is also possible to run headless PhantomJS on the Cloud9 server.</p>
-<pre><code class="language-bash"><span class="hljs-comment"># Install the PhantomJS plugin:</span>
-$ npm install karma-phantomjs-launcher
-
-<span class="hljs-comment"># Start Karma:</span>
-$ karma start --browsers PhantomJS</code></pre>
+        <div id="markdown" class="sixteen columns bottom"><p>The list below is a collection of common questions regarding Karma and its use.
+If you have any other questions in mind, please visit the <a href="https://groups.google.com/d/forum/karma-users">mailing list</a> to let the community know.</p>
+<h3>Can I use Karma with testing framework X ?</h3>
+<p>Yes. There are plugins for most of the common testing frameworks (such as Jasmine, Mocha, QUnit).
+If there is no plugin for the testing framework you like, go ahead and write one. It is simple -
+you can start by looking into the source code of the existing ones.</p>
+<h3>Can I use Karma to do end to end testing ?</h3>
+<p>Karma has primarily been designed for low level (unit) testing. If it&#39;s an AngularJS app, you can
+use Karma with <a href="https://github.com/karma-runner/karma-ng-scenario">karma-ng-scenario</a> plugin, however we recommend <a href="https://github.com/angular/protractor">Protractor</a> for high level testing.</p>
+<h3>Can I use Karma on Continuous Integration server ?</h3>
+<p>Of course! Check out the docs for <a href="../plus/jenkins.html">Jenkins</a>, <a href="../plus/travis.html">Travis</a> or <a href="../plus/semaphore.html">Semaphore</a>.</p>
+<h3>Which version of Karma should I use ?</h3>
+<p>The latest stable version from NPM (<code>npm install karma</code>). See <a href="../about/versioning.html">versioning</a> for more detailed information about Karma&#39;s release channels.</p>
+<h3>Which version of Node.js does Karma run with ?</h3>
+<p>The two latest stable versions. That means <code>0.8</code> and <code>0.10</code> at this point.</p>
 
         </div>
       </div>

@@ -6,7 +6,7 @@
 <head>
   <!-- Basic Page Needs-->
   <meta charset="utf-8">
-  <title>Karma - Cloud9</title>
+  <title>Karma - Semaphore CI</title>
   <!-- Mobile specific Metas-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="">
@@ -27,7 +27,7 @@
     <header>
       <div class="flash">
         <b>Heads Up!</b> You're viewing the docs for <b>v0.8</b>, an old version of Karma.
-        <a href="/0.12/plus/cloud9.html"><b>v0.12</b> is the newest</a>.
+        <a href="/0.12/plus/semaphore.html"><b>v0.12</b> is the newest</a>.
       </div>
       <div class="container clearfix">
         <div class="six columns">
@@ -100,29 +100,44 @@
     </header>
     <div class="container clearfix">
       <div class="sixteen columns">
-        <h1 class="page-title">Cloud9<a href="https://github.com/karma-runner/karma/edit/master/docs/plus/05-cloud9.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
+        <h1 class="page-title">Semaphore CI<a href="https://github.com/karma-runner/karma/edit/master/docs/plus/04-semaphore.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p><a href="https://c9.io/">Cloud9 IDE</a> is an open source web-based cloud integrated development environment that supports
-several programming languages, with a focus on the web stack (specifically JavaScript and NodeJS).
-It is written almost entirely in JavaScript, and uses NodeJS on the back-end.</p>
-<h2>Configuration</h2>
-<p>First, make sure the <code>karma.conf.js</code> includes the following entries:</p>
-<pre><code class="language-javascript">hostname: process.env.IP,
-port: process.env.PORT</code></pre>
-<h2>Capture the browser manually on the local machine</h2>
-<p>You can use any of your local browsers.</p>
-<pre><code class="language-bash"><span class="hljs-comment"># Start Karma without browsers:</span>
-$ karma start --no-browsers</code></pre>
-<p>Now, open <code>http://&lt;projectName&gt;.&lt;cloud9User&gt;.c9.io/</code> in your browser.</p>
-<h2>Run Karma unit tests with PhantomJS</h2>
-<p>It is also possible to run headless PhantomJS on the Cloud9 server.</p>
-<pre><code class="language-bash"><span class="hljs-comment"># Install the PhantomJS plugin:</span>
-$ npm install karma-phantomjs-launcher
-
-<span class="hljs-comment"># Start Karma:</span>
-$ karma start --browsers PhantomJS</code></pre>
+        <div id="markdown" class="sixteen columns bottom"><p><a href="https://semaphoreapp.com">Semaphore</a> is a popular continuous integration service for
+Ruby developers that <a href="https://semaphoreapp.com/features">integrates</a> with <a href="https://github.com/">GitHub</a>. It also includes
+<a href="http://nodejs.org">Node.js</a>, <a href="http://phantomjs.org/">PhantomJS</a> and headless Firefox in its <a href="http://docs.semaphoreapp.com/version-information">platform</a>,
+making it fit for testing JavaScript applications as well.
+This article assumes you already have a Semaphore account.</p>
+<h2>Configure Your Project</h2>
+<p>If you do not already have a <code>package.json</code> in your project root,
+create one now. This will both document your configuration and
+make it easy to run your tests. Here&#39;s an example:</p>
+<pre><code class="language-javascript"><span class="hljs-comment">// ...snip...</span>
+<span class="hljs-string">'devDependencies'</span>: {
+  <span class="hljs-string">'karma'</span>: <span class="hljs-string">'~0.10'</span>
+},
+<span class="hljs-comment">// ...snip...</span>
+<span class="hljs-string">'scripts'</span>: {
+   <span class="hljs-string">'test'</span>: <span class="hljs-string">'./node_modules/.bin/karma start --single-run --browsers PhantomJS'</span>
+}
+<span class="hljs-comment">// ...snip...</span></code></pre>
+<p>Another option is to use Firefox as your test browser. To do this, change
+the last part to:</p>
+<pre><code class="language-javascript"><span class="hljs-string">'scripts'</span>: {
+   <span class="hljs-string">'test'</span>: <span class="hljs-string">'./node_modules/.bin/karma start --single-run --browsers Firefox'</span>
+}</code></pre>
+<p>Now running <code>npm test</code> within your project will run your tests with Karma.</p>
+<h2>Add Your Project to Semaphore</h2>
+<p>Follow the process as shown in the <a href="https://semaphoreapp.com/">screencast</a> on the Semaphore homepage.</p>
+<p>After the analysis is finished, ignore the Ruby version Semaphore has set
+for you, choose to customize your build commands and use these:</p>
+<pre><code class="language-bash">npm install
+npm test</code></pre>
+<p>That&#39;s it - proceed to your first build. In case you&#39;re using Firefox as
+your test browser, Semaphore will automatically run it in a virtual screen
+during your builds.</p>
+<p>Also, if necessary, build commands can be further <a href="http://docs.semaphoreapp.com/custom-build-commands">customized</a> at any time.</p>
 
         </div>
       </div>
