@@ -60,7 +60,6 @@
                   <li><a href="/0.12/plus/angularjs.html">AngularJS</a></li>
                   <li><a href="/0.12/plus/yeoman.html">Yeoman</a></li>
                   <li><a href="/0.12/plus/emberjs.html">Ember.js</a></li>
-                  <li><a href="/0.12/plus/codio.html">Codio</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">dev</a>
@@ -186,7 +185,7 @@ includes all the files in <code>window.__karma__.files</code>, so by filtering t
 array we find all our test files.</p>
 <p>Now we can tell Require.js to load our tests, which must be done
 asynchronously as dependencies must be fetched before the tests are run.
-The <code>test/main-test.js</code> file ends up looking like this:</p>
+The <code>test/test-main.js</code> file ends up looking like this:</p>
 <pre><code class="language-javascript"><span class="hljs-keyword">var</span> allTestFiles = [];
 <span class="hljs-keyword">var</span> TEST_REGEXP = <span class="hljs-regexp">/test\.js$/</span>;
 
