@@ -6,7 +6,7 @@
 <head>
   <!-- Basic Page Needs-->
   <meta charset="utf-8">
-  <title>Karma - Versioning</title>
+  <title>Karma - Migration from v0.10</title>
   <!-- Mobile specific Metas-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="">
@@ -27,7 +27,7 @@
     <header>
       <div class="flash">
         <b>Heads Up!</b> You're viewing the docs for <b>v0.6</b>, an old version of Karma.
-        <a href="/0.12/about/versioning.html"><b>v0.12</b> is the newest</a>.
+        <a href="/0.12/about/migration.html"><b>v0.12</b> is the newest</a>.
       </div>
       <div class="container clearfix">
         <div class="six columns">
@@ -100,25 +100,43 @@
     </header>
     <div class="container clearfix">
       <div class="sixteen columns">
-        <h1 class="page-title">Versioning<a href="https://github.com/karma-runner/karma/edit/master/docs/about/01-versioning.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
+        <h1 class="page-title">Migration from v0.10<a href="https://github.com/karma-runner/karma/edit/master/docs/about/03-migration.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p>Karma uses <a href="http://semver.org/">Semantic Versioning</a> with a little exception:</p>
+        <div id="markdown" class="sixteen columns bottom"><p>The good thing is that you don&#39;t have to migrate everything at once.
+You can leave all the existing projects using an older version of Karma and only use the latest
+version for the new projects. Or you can migrate the existing projects one at the time...</p>
+<p>Anyway, this migration should be easy ;-) so let&#39;s get started...</p>
+<pre><code class="language-bash"><span class="hljs-built_in">cd</span> &lt;path-to-your-project&gt;
+npm install karma --save-dev</code></pre>
+<p>This will install the latest version of Karma and also update <code>package.json</code> of your project.</p>
+<h2>Install missing plugins</h2>
+<p>Karma does not ship with any &quot;default&quot; plugin anymore.
+For existing projects, this should not cause any problems as NPM (when installing Karma 0.10) probably added these &quot;default&quot; plugins into <code>package.json</code> as regular dependencies.
+For new projects, just remember you have to install all the plugins you need. These are the &quot;default&quot; plugins that were removed:</p>
 <ul>
-<li>even versions (eg. <code>0.6.x</code>, <code>0.8.x</code>) are considered stable - no breaking changes or new features, only bug fixes will pushed into this branch,</li>
-<li>odd versions (eg. <code>0.7.x</code>, <code>0.9.x</code>) are unstable - anything can happen ;-)</li>
+<li>karma-jasmine</li>
+<li>karma-requirejs</li>
+<li>karma-coffee-preprocessor</li>
+<li>karma-html2js-preprocessor</li>
+<li>karma-chrome-launcher</li>
+<li>karma-firefox-launcher</li>
+<li>karma-phantomjs-launcher</li>
+<li>karma-script-launcher</li>
 </ul>
-<p>Therefore it is recommended to rely on the latest stable version, which gives you automatic bug fixes, but does not break you:</p>
-<pre><code class="language-javascript">{
-  <span class="hljs-string">"devDependencies"</span>: {
-    <span class="hljs-string">"karma"</span>: <span class="hljs-string">"~0.10"</span>
-  }
-}</code></pre>
-<h2>Stable channel (branch <code>stable</code>)</h2>
-<pre><code class="language-bash">$ npm install karma</code></pre>
-<h2>Canary channel (branch <code>master</code>)</h2>
-<pre><code class="language-bash">$ npm install karma@canary</code></pre>
+<h2>Install CLI interface</h2>
+<p>Karma does not put the <code>karma</code> command in your system PATH anymore.
+If you want to use the <code>karma</code> command, please install the command line interface (<code>karma-cli</code>).</p>
+<p>You probably have <code>karma</code> package installed globally, in which case you should remove it first:</p>
+<pre><code class="language-bash">npm remove -g karma</code></pre>
+<p>And then install the command line interface:</p>
+<pre><code class="language-bash">npm install -g karma-cli</code></pre>
+<h2>Default configuration</h2>
+<p><code>autoWatch</code> is true by default, so if you don&#39;t wanna use it make sure you set it to <code>false</code>. But hey, give it a shot first, it&#39;s really awesome to run your tests on every save!</p>
+<h2>NPM complaining</h2>
+<p>NPM is sometimes finicky so if you encounter errors such as &quot;unsatisfied peer dependency&quot;, just try to remove all the packages (<code>rm -rf ./node_modules</code>) and install again.</p>
+<p>If you have any other issuses, please ask on the <a href="https://groups.google.com/forum/?fromgroups#!forum/karma-users">mailing list</a>.</p>
 
         </div>
       </div>

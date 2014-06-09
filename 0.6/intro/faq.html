@@ -6,7 +6,7 @@
 <head>
   <!-- Basic Page Needs-->
   <meta charset="utf-8">
-  <title>Karma - Versioning</title>
+  <title>Karma - Frequently Asked Questions</title>
   <!-- Mobile specific Metas-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="">
@@ -27,7 +27,7 @@
     <header>
       <div class="flash">
         <b>Heads Up!</b> You're viewing the docs for <b>v0.6</b>, an old version of Karma.
-        <a href="/0.12/about/versioning.html"><b>v0.12</b> is the newest</a>.
+        <a href="/0.12/intro/faq.html"><b>v0.12</b> is the newest</a>.
       </div>
       <div class="container clearfix">
         <div class="six columns">
@@ -36,7 +36,7 @@
         <div class="ten columns">
           <nav id="menu" class="navigation">
             <ul id="nav">
-              <li><a href="javascript:void" class="">intro</a>
+              <li><a href="javascript:void" class="active">intro</a>
                 <ul>
                   <li><a href="/0.6/intro/installation.html">Installation</a></li>
                   <li><a href="/0.6/intro/configuration.html">Configuration</a></li>
@@ -75,7 +75,7 @@
                   <li><a href="/0.6/dev/plugins.html">Plugins</a></li>
                 </ul>
               </li>
-              <li><a href="javascript:void" class="active">about</a>
+              <li><a href="javascript:void" class="">about</a>
                 <ul>
                   <li><a href="/0.6/about/versioning.html">Versioning</a></li>
                   <li><a href="/0.6/about/changelog.html">Changelog</a></li>
@@ -100,25 +100,25 @@
     </header>
     <div class="container clearfix">
       <div class="sixteen columns">
-        <h1 class="page-title">Versioning<a href="https://github.com/karma-runner/karma/edit/master/docs/about/01-versioning.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
+        <h1 class="page-title">Frequently Asked Questions<a href="https://github.com/karma-runner/karma/edit/master/docs/intro/04-faq.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p>Karma uses <a href="http://semver.org/">Semantic Versioning</a> with a little exception:</p>
-<ul>
-<li>even versions (eg. <code>0.6.x</code>, <code>0.8.x</code>) are considered stable - no breaking changes or new features, only bug fixes will pushed into this branch,</li>
-<li>odd versions (eg. <code>0.7.x</code>, <code>0.9.x</code>) are unstable - anything can happen ;-)</li>
-</ul>
-<p>Therefore it is recommended to rely on the latest stable version, which gives you automatic bug fixes, but does not break you:</p>
-<pre><code class="language-javascript">{
-  <span class="hljs-string">"devDependencies"</span>: {
-    <span class="hljs-string">"karma"</span>: <span class="hljs-string">"~0.10"</span>
-  }
-}</code></pre>
-<h2>Stable channel (branch <code>stable</code>)</h2>
-<pre><code class="language-bash">$ npm install karma</code></pre>
-<h2>Canary channel (branch <code>master</code>)</h2>
-<pre><code class="language-bash">$ npm install karma@canary</code></pre>
+        <div id="markdown" class="sixteen columns bottom"><p>The list below is a collection of common questions regarding Karma and its use.
+If you have any other questions in mind, please visit the <a href="https://groups.google.com/d/forum/karma-users">mailing list</a> to let the community know.</p>
+<h3>Can I use Karma with testing framework X ?</h3>
+<p>Yes. There are plugins for most of the common testing frameworks (such as Jasmine, Mocha, QUnit).
+If there is no plugin for the testing framework you like, go ahead and write one. It is simple -
+you can start by looking into the source code of the existing ones.</p>
+<h3>Can I use Karma to do end to end testing ?</h3>
+<p>Karma has primarily been designed for low level (unit) testing. If it&#39;s an AngularJS app, you can
+use Karma with <a href="https://github.com/karma-runner/karma-ng-scenario">karma-ng-scenario</a> plugin, however we recommend <a href="https://github.com/angular/protractor">Protractor</a> for high level testing.</p>
+<h3>Can I use Karma on Continuous Integration server ?</h3>
+<p>Of course! Check out the docs for <a href="../plus/jenkins.html">Jenkins</a>, <a href="../plus/travis.html">Travis</a> or <a href="../plus/semaphore.html">Semaphore</a>.</p>
+<h3>Which version of Karma should I use ?</h3>
+<p>The latest stable version from NPM (<code>npm install karma</code>). See <a href="../about/versioning.html">versioning</a> for more detailed information about Karma&#39;s release channels.</p>
+<h3>Which version of Node.js does Karma run with ?</h3>
+<p>The two latest stable versions. That means <code>0.8</code> and <code>0.10</code> at this point.</p>
 
         </div>
       </div>

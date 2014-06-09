@@ -6,7 +6,7 @@
 <head>
   <!-- Basic Page Needs-->
   <meta charset="utf-8">
-  <title>Karma - Versioning</title>
+  <title>Karma - Travis CI</title>
   <!-- Mobile specific Metas-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="">
@@ -27,7 +27,7 @@
     <header>
       <div class="flash">
         <b>Heads Up!</b> You're viewing the docs for <b>v0.6</b>, an old version of Karma.
-        <a href="/0.12/about/versioning.html"><b>v0.12</b> is the newest</a>.
+        <a href="/0.12/plus/travis.html"><b>v0.12</b> is the newest</a>.
       </div>
       <div class="container clearfix">
         <div class="six columns">
@@ -54,7 +54,7 @@
                   <li><a href="/0.6/config/plugins.html">Plugins</a></li>
                 </ul>
               </li>
-              <li><a href="javascript:void" class="">plus</a>
+              <li><a href="javascript:void" class="active">plus</a>
                 <ul>
                   <li><a href="/0.6/plus/requirejs.html">RequireJS</a></li>
                   <li><a href="/0.6/plus/travis.html">Travis CI</a></li>
@@ -75,7 +75,7 @@
                   <li><a href="/0.6/dev/plugins.html">Plugins</a></li>
                 </ul>
               </li>
-              <li><a href="javascript:void" class="active">about</a>
+              <li><a href="javascript:void" class="">about</a>
                 <ul>
                   <li><a href="/0.6/about/versioning.html">Versioning</a></li>
                   <li><a href="/0.6/about/changelog.html">Changelog</a></li>
@@ -100,25 +100,63 @@
     </header>
     <div class="container clearfix">
       <div class="sixteen columns">
-        <h1 class="page-title">Versioning<a href="https://github.com/karma-runner/karma/edit/master/docs/about/01-versioning.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
+        <h1 class="page-title">Travis CI<a href="https://github.com/karma-runner/karma/edit/master/docs/plus/02-travis.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p>Karma uses <a href="http://semver.org/">Semantic Versioning</a> with a little exception:</p>
+        <div id="markdown" class="sixteen columns bottom"><p><a href="https://travis-ci.org/">Travis CI</a> is a popular continuous integration service that
+integrates with your <a href="https://github.com/">Github</a> repository to automatically run your
+tests when code is pushed. Integration is done by adding a simple
+<a href="http://www.yaml.org/">YAML</a> file to your project root; Travis and Github take care of the
+rest. Whenever tested, the Travis results will appear in your Github pull requests and your
+history will be available within their control panel. This article assumes you
+already have Travis account.</p>
+<h2>Configure Travis</h2>
+<p>Create a file in your project root called <code>.travis.yml</code> with the
+following YAML content:</p>
+<pre><code class="language-ruby"><span class="hljs-symbol">language:</span> node_js
+<span class="hljs-symbol">node_js:</span>
+  - <span class="hljs-number">0</span>.<span class="hljs-number">8</span></code></pre>
+<h2>Setup a Test Command</h2>
+<p>If you do not already have a <code>package.json</code> in your project root
+create one now. Travis runs <code>npm test</code> to trigger your tests so this
+is where you tell Travis how to run your tests.</p>
+<pre><code class="language-javascript"><span class="hljs-comment">// ...snip...</span>
+<span class="hljs-string">'devDependencies'</span>: {
+  <span class="hljs-string">'karma'</span>: <span class="hljs-string">'~0.10'</span>
+},
+<span class="hljs-comment">// ...snip...</span>
+<span class="hljs-string">'scripts'</span>: {
+   <span class="hljs-string">'test'</span>: <span class="hljs-string">'./node_modules/.bin/karma start --single-run --browsers PhantomJS'</span>
+}
+<span class="hljs-comment">// ...snip...</span></code></pre>
+<p>Travis will run <code>npm install</code> before every suite so this is your
+chance to specify any modules your app needs that Travis does not know
+about like Karma.</p>
+<h2>Configure Travis with Firefox</h2>
+<p>Travis supports running a real browser (Firefox) with a virtual
+screen. Just update your <code>.travis.yml</code> to set up the virtual screen
+like this:</p>
+<pre><code class="language-ruby"><span class="hljs-symbol">language:</span> node_js
+<span class="hljs-symbol">node_js:</span>
+  - <span class="hljs-number">0</span>.<span class="hljs-number">8</span>
+<span class="hljs-symbol">before_script:</span>
+  - export <span class="hljs-constant">DISPLAY</span>=<span class="hljs-symbol">:</span><span class="hljs-number">99.0</span>
+  - sh -e /etc/init.d/xvfb start</code></pre>
+<p>And now, you can run your tests on Firefox, just change the <code>npm test</code>
+command to</p>
+<pre><code class="language-bash">./node_modules/.bin/karma start --browsers Firefox --single-run</code></pre>
+<h2>Notes</h2>
 <ul>
-<li>even versions (eg. <code>0.6.x</code>, <code>0.8.x</code>) are considered stable - no breaking changes or new features, only bug fixes will pushed into this branch,</li>
-<li>odd versions (eg. <code>0.7.x</code>, <code>0.9.x</code>) are unstable - anything can happen ;-)</li>
+<li>Travis&#39; Node environment has very little available. If the startup
+process in Travis fails check for missing module information and be
+sure to add them to your <code>package.json</code> dependencies.</li>
+<li>Travis does not run in your local network so any code that attempts
+to connect to resources should be stubbed out using <a href="https://github.com/flatiron/nock">Nock</a>.</li>
+<li>There are more options available to your <code>.travis.yml</code>, such as
+running scripts before the install or test run. There are hints in
+the Travis docs for <a href="http://about.travis-ci.org/docs/user/gui-and-headless-browsers/">GUI apps</a> configuration.</li>
 </ul>
-<p>Therefore it is recommended to rely on the latest stable version, which gives you automatic bug fixes, but does not break you:</p>
-<pre><code class="language-javascript">{
-  <span class="hljs-string">"devDependencies"</span>: {
-    <span class="hljs-string">"karma"</span>: <span class="hljs-string">"~0.10"</span>
-  }
-}</code></pre>
-<h2>Stable channel (branch <code>stable</code>)</h2>
-<pre><code class="language-bash">$ npm install karma</code></pre>
-<h2>Canary channel (branch <code>master</code>)</h2>
-<pre><code class="language-bash">$ npm install karma@canary</code></pre>
 
         </div>
       </div>

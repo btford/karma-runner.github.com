@@ -25,6 +25,10 @@
 <body>
   <div id="wrap" class="boxed">
     <header>
+      <div class="flash">
+        <b>Heads Up!</b> You're viewing the docs for <b>v0.6</b>, an old version of Karma.
+        <a href="/0.12/dev/public-api.html"><b>v0.12</b> is the newest</a>.
+      </div>
       <div class="container clearfix">
         <div class="six columns">
           <div class="logo"><a href="/0.6/index.html"><img src="/assets/img/banner.png" alt="Karma - Spectacular Test Runner for JavaScript" title="Karma - Spectacular Test Runner for JavaScript"></a></div>
@@ -36,6 +40,8 @@
                 <ul>
                   <li><a href="/0.6/intro/installation.html">Installation</a></li>
                   <li><a href="/0.6/intro/configuration.html">Configuration</a></li>
+                  <li><a href="/0.6/intro/how-it-works.html">How It Works</a></li>
+                  <li><a href="/0.6/intro/faq.html">FAQ</a></li>
                   <li><a href="/0.6/intro/troubleshooting.html">Troubleshooting</a></li>
                 </ul>
               </li>
@@ -45,31 +51,35 @@
                   <li><a href="/0.6/config/files.html">Files</a></li>
                   <li><a href="/0.6/config/browsers.html">Browsers</a></li>
                   <li><a href="/0.6/config/preprocessors.html">Preprocessors</a></li>
-                  <li><a href="/0.6/config/coverage.html">Coverage</a></li>
+                  <li><a href="/0.6/config/plugins.html">Plugins</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">plus</a>
                 <ul>
-                  <li><a href="/0.6/plus/AngularJS.html">AngularJS</a></li>
-                  <li><a href="/0.6/plus/RequireJS.html">RequireJS</a></li>
-                  <li><a href="/0.6/plus/Jenkins-CI.html">Jenkins CI</a></li>
-                  <li><a href="/0.6/plus/Travis-CI.html">Travis CI</a></li>
-                  <li><a href="/0.6/plus/Cloud9.html">Cloud9</a></li>
-                  <li><a href="/0.6/plus/Teamcity.html">Teamcity</a></li>
-                  <li><a href="/0.6/plus/Yeoman.html">Yeoman</a></li>
+                  <li><a href="/0.6/plus/requirejs.html">RequireJS</a></li>
+                  <li><a href="/0.6/plus/travis.html">Travis CI</a></li>
+                  <li><a href="/0.6/plus/jenkins.html">Jenkins CI</a></li>
+                  <li><a href="/0.6/plus/semaphore.html">Semaphore CI</a></li>
+                  <li><a href="/0.6/plus/cloud9.html">Cloud9</a></li>
+                  <li><a href="/0.6/plus/angularjs.html">AngularJS</a></li>
+                  <li><a href="/0.6/plus/yeoman.html">Yeoman</a></li>
+                  <li><a href="/0.6/plus/emberjs.html">Ember.js</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="active">dev</a>
                 <ul>
-                  <li><a href="/0.6/dev/public-api.html">Public Api</a></li>
                   <li><a href="/0.6/dev/contributing.html">Contributing</a></li>
-                  <li><a href="/0.6/dev/git-commit-msg.html">Git Commit Msg</a></li>
+                  <li><a href="/0.6/dev/making-changes.html">Making Changes</a></li>
+                  <li><a href="/0.6/dev/maintaining.html">Maintaining</a></li>
+                  <li><a href="/0.6/dev/public-api.html">Public Api</a></li>
+                  <li><a href="/0.6/dev/plugins.html">Plugins</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">about</a>
                 <ul>
-                  <li><a href="/0.6/about/changelog.html">Changelog</a></li>
                   <li><a href="/0.6/about/versioning.html">Versioning</a></li>
+                  <li><a href="/0.6/about/changelog.html">Changelog</a></li>
+                  <li><a href="/0.6/about/migration.html">Migration</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void">v0.6</a>
@@ -90,27 +100,26 @@
     </header>
     <div class="container clearfix">
       <div class="sixteen columns">
-        <h1 class="page-title">Public Api<a href="https://github.com/karma-runner/karma/edit/master/docs/dev/01-public-api.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
+        <h1 class="page-title">Public Api<a href="https://github.com/karma-runner/karma/edit/master/docs/dev/04-public-api.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p>Most of the time, you will be using Testacular directly from the command line.</p>
-<p>You can, however, call Testacular programmatically from your node module. This might be helpful when
-using Testacular with <a href="http://gruntjs.com/">Grunt</a> for instance.</p>
-<h2>testacular.server</h2>
+        <div id="markdown" class="sixteen columns bottom"><p>Most of the time, you will be using Karma directly from the command line.
+You can, however, call Karma programmatically from your node module. Here is the public API.</p>
+<h2>karma.server</h2>
 <h3><strong>server.start(options, [callback=process.exit])</strong></h3>
-<p>Equivalent of <code>testacular start</code>.</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> server = require(<span class="string">'testacular'</span>).server;
-server.start({port: <span class="number">9877</span>}, <span class="keyword">function</span>(exitCode) {
-  console.log(<span class="string">'Testacular has exitted with '</span> + exitCode);
+<p>Equivalent of <code>karma start</code>.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> server = <span class="hljs-built_in">require</span>(<span class="hljs-string">'karma'</span>).server;
+server.start({port: <span class="hljs-number">9876</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(exitCode)</span> {</span>
+  console.log(<span class="hljs-string">'Karma has exited with '</span> + exitCode);
   process.exit(exitCode);
 });</code></pre>
-<h2>testacular.runner</h2>
+<h2>karma.runner</h2>
 <h3><strong>runner.run(options, [callback=process.exit])</strong></h3>
-<p>Equivalent of <code>testacular run</code>.</p>
-<pre><code class="language-javascript"><span class="keyword">var</span> runner = require(<span class="string">'testacular'</span>).runner;
-runner.run({runnerPort: <span class="number">9100</span>}, <span class="keyword">function</span>(exitCode) {
-  console.log(<span class="string">'Testacular has exitted with '</span> + exitCode);
+<p>Equivalent of <code>karma run</code>.</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> runner = <span class="hljs-built_in">require</span>(<span class="hljs-string">'karma'</span>).runner;
+runner.run({port: <span class="hljs-number">9876</span>}, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(exitCode)</span> {</span>
+  console.log(<span class="hljs-string">'Karma has exited with '</span> + exitCode);
   process.exit(exitCode);
 });</code></pre>
 

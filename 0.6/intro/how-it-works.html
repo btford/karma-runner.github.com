@@ -6,7 +6,7 @@
 <head>
   <!-- Basic Page Needs-->
   <meta charset="utf-8">
-  <title>Karma - Versioning</title>
+  <title>Karma - How It Works</title>
   <!-- Mobile specific Metas-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="">
@@ -27,7 +27,7 @@
     <header>
       <div class="flash">
         <b>Heads Up!</b> You're viewing the docs for <b>v0.6</b>, an old version of Karma.
-        <a href="/0.12/about/versioning.html"><b>v0.12</b> is the newest</a>.
+        <a href="/0.12/intro/how-it-works.html"><b>v0.12</b> is the newest</a>.
       </div>
       <div class="container clearfix">
         <div class="six columns">
@@ -36,7 +36,7 @@
         <div class="ten columns">
           <nav id="menu" class="navigation">
             <ul id="nav">
-              <li><a href="javascript:void" class="">intro</a>
+              <li><a href="javascript:void" class="active">intro</a>
                 <ul>
                   <li><a href="/0.6/intro/installation.html">Installation</a></li>
                   <li><a href="/0.6/intro/configuration.html">Configuration</a></li>
@@ -75,7 +75,7 @@
                   <li><a href="/0.6/dev/plugins.html">Plugins</a></li>
                 </ul>
               </li>
-              <li><a href="javascript:void" class="active">about</a>
+              <li><a href="javascript:void" class="">about</a>
                 <ul>
                   <li><a href="/0.6/about/versioning.html">Versioning</a></li>
                   <li><a href="/0.6/about/changelog.html">Changelog</a></li>
@@ -100,25 +100,25 @@
     </header>
     <div class="container clearfix">
       <div class="sixteen columns">
-        <h1 class="page-title">Versioning<a href="https://github.com/karma-runner/karma/edit/master/docs/about/01-versioning.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
+        <h1 class="page-title">How It Works<a href="https://github.com/karma-runner/karma/edit/master/docs/intro/03-how-it-works.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p>Karma uses <a href="http://semver.org/">Semantic Versioning</a> with a little exception:</p>
+        <div id="markdown" class="sixteen columns bottom"><p>Karma is essentially a tool which spawns a web server that executes source code against test code for each of the browsers connected.
+The results for each test against each browser are examined and displayed via the command line to the developer
+such that they can see which browsers and tests passed or failed.</p>
+<p>A browser can be captured either</p>
 <ul>
-<li>even versions (eg. <code>0.6.x</code>, <code>0.8.x</code>) are considered stable - no breaking changes or new features, only bug fixes will pushed into this branch,</li>
-<li>odd versions (eg. <code>0.7.x</code>, <code>0.9.x</code>) are unstable - anything can happen ;-)</li>
+<li>manually, by visiting the URL where the Karma server is listening (typically <code>http://localhost:9876/</code>),</li>
+<li>or automatically by letting Karma know which browsers to start when Karma is run (see <a href="../config/browsers.html">browsers</a>).</li>
 </ul>
-<p>Therefore it is recommended to rely on the latest stable version, which gives you automatic bug fixes, but does not break you:</p>
-<pre><code class="language-javascript">{
-  <span class="hljs-string">"devDependencies"</span>: {
-    <span class="hljs-string">"karma"</span>: <span class="hljs-string">"~0.10"</span>
-  }
-}</code></pre>
-<h2>Stable channel (branch <code>stable</code>)</h2>
-<pre><code class="language-bash">$ npm install karma</code></pre>
-<h2>Canary channel (branch <code>master</code>)</h2>
-<pre><code class="language-bash">$ npm install karma@canary</code></pre>
+<p>Karma also watches all the files, specified within the configuration file, and whenever any file changes, it triggers the test run by
+sending a signal to the testing server to inform all of the captured browsers to run the test code again.
+Each browser then loads the source files inside an IFrame, executes the tests and reports the results back to the server.</p>
+<p>The server collects the results from all of the captured browsers and presents them to the developer.</p>
+<p>This is only a very brief overview, as the internals of how Karma works aren&#39;t entirely necessary when using Karma.</p>
+<p>However, if you are interested in learning more, Karma itself originates from a university thesis, which goes into detail about the design
+and implementation, and it is available to read <a href="https://github.com/karma-runner/karma/raw/master/thesis.pdf">right here</a>.</p>
 
         </div>
       </div>

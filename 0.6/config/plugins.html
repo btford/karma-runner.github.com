@@ -6,7 +6,7 @@
 <head>
   <!-- Basic Page Needs-->
   <meta charset="utf-8">
-  <title>Karma - Versioning</title>
+  <title>Karma - Plugins</title>
   <!-- Mobile specific Metas-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="">
@@ -27,7 +27,7 @@
     <header>
       <div class="flash">
         <b>Heads Up!</b> You're viewing the docs for <b>v0.6</b>, an old version of Karma.
-        <a href="/0.12/about/versioning.html"><b>v0.12</b> is the newest</a>.
+        <a href="/0.12/config/plugins.html"><b>v0.12</b> is the newest</a>.
       </div>
       <div class="container clearfix">
         <div class="six columns">
@@ -45,7 +45,7 @@
                   <li><a href="/0.6/intro/troubleshooting.html">Troubleshooting</a></li>
                 </ul>
               </li>
-              <li><a href="javascript:void" class="">config</a>
+              <li><a href="javascript:void" class="active">config</a>
                 <ul>
                   <li><a href="/0.6/config/configuration-file.html">Configuration File</a></li>
                   <li><a href="/0.6/config/files.html">Files</a></li>
@@ -75,7 +75,7 @@
                   <li><a href="/0.6/dev/plugins.html">Plugins</a></li>
                 </ul>
               </li>
-              <li><a href="javascript:void" class="active">about</a>
+              <li><a href="javascript:void" class="">about</a>
                 <ul>
                   <li><a href="/0.6/about/versioning.html">Versioning</a></li>
                   <li><a href="/0.6/about/changelog.html">Changelog</a></li>
@@ -100,25 +100,38 @@
     </header>
     <div class="container clearfix">
       <div class="sixteen columns">
-        <h1 class="page-title">Versioning<a href="https://github.com/karma-runner/karma/edit/master/docs/about/01-versioning.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
+        <h1 class="page-title">Plugins<a href="https://github.com/karma-runner/karma/edit/master/docs/config/05-plugins.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p>Karma uses <a href="http://semver.org/">Semantic Versioning</a> with a little exception:</p>
-<ul>
-<li>even versions (eg. <code>0.6.x</code>, <code>0.8.x</code>) are considered stable - no breaking changes or new features, only bug fixes will pushed into this branch,</li>
-<li>odd versions (eg. <code>0.7.x</code>, <code>0.9.x</code>) are unstable - anything can happen ;-)</li>
-</ul>
-<p>Therefore it is recommended to rely on the latest stable version, which gives you automatic bug fixes, but does not break you:</p>
+        <div id="markdown" class="sixteen columns bottom"><p>Karma can be easily extended through plugins.
+In fact, all the existing preprocessors, reporters, browser launchers and frameworks are also plugins.</p>
+<h2>Installation</h2>
+<p>Karma plugins are NPM modules, so the recommended way is to keep all the plugins your project requires in <code>package.json</code>:</p>
 <pre><code class="language-javascript">{
   <span class="hljs-string">"devDependencies"</span>: {
-    <span class="hljs-string">"karma"</span>: <span class="hljs-string">"~0.10"</span>
+    <span class="hljs-string">"karma"</span>: <span class="hljs-string">"~0.10"</span>,
+    <span class="hljs-string">"karma-mocha"</span>: <span class="hljs-string">"~0.0.1"</span>,
+    <span class="hljs-string">"karma-growl-reporter"</span>: <span class="hljs-string">"~0.0.1"</span>,
+    <span class="hljs-string">"karma-firefox-launcher"</span>: <span class="hljs-string">"~0.0.1"</span>
   }
 }</code></pre>
-<h2>Stable channel (branch <code>stable</code>)</h2>
-<pre><code class="language-bash">$ npm install karma</code></pre>
-<h2>Canary channel (branch <code>master</code>)</h2>
-<pre><code class="language-bash">$ npm install karma@canary</code></pre>
+<p>Therefore, a simple way how to install a plugin is</p>
+<pre><code class="language-bash">npm install karma-&lt;plugin name&gt; --save-dev</code></pre>
+<h2>Loading Plugins</h2>
+<p>By default, Karma loads all sibling NPM modules which names start with <code>karma-*</code>.</p>
+<p>You can also explicitly list plugins you want to load via the <code>plugins</code> configuration setting. The configuration value can either be
+a string (module name), which will be required by Karma, or an object (inlined plugin).</p>
+<pre><code class="language-javascript">plugins: [
+  <span class="hljs-comment">// these plugins will be require() by Karma</span>
+  <span class="hljs-string">'karma-jasmine'</span>,
+  <span class="hljs-string">'karma-chrome-launcher'</span>
+
+  <span class="hljs-comment">// inlined plugins</span>
+  {<span class="hljs-string">'framework:xyz'</span>, [<span class="hljs-string">'factory'</span>, factoryFn]},
+  <span class="hljs-built_in">require</span>(<span class="hljs-string">'./plugin-required-from-config'</span>)
+]</code></pre>
+<p>There are already many <a href="https://npmjs.org/browse/keyword/karma-plugin">existing plugins</a>. Of course, you write <a href="../dev/plugins.html">your own plugins</a> too!</p>
 
         </div>
       </div>

@@ -6,7 +6,7 @@
 <head>
   <!-- Basic Page Needs-->
   <meta charset="utf-8">
-  <title>Karma - Versioning</title>
+  <title>Karma - Ember.js</title>
   <!-- Mobile specific Metas-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="">
@@ -27,7 +27,7 @@
     <header>
       <div class="flash">
         <b>Heads Up!</b> You're viewing the docs for <b>v0.6</b>, an old version of Karma.
-        <a href="/0.12/about/versioning.html"><b>v0.12</b> is the newest</a>.
+        <a href="/0.12/plus/emberjs.html"><b>v0.12</b> is the newest</a>.
       </div>
       <div class="container clearfix">
         <div class="six columns">
@@ -54,7 +54,7 @@
                   <li><a href="/0.6/config/plugins.html">Plugins</a></li>
                 </ul>
               </li>
-              <li><a href="javascript:void" class="">plus</a>
+              <li><a href="javascript:void" class="active">plus</a>
                 <ul>
                   <li><a href="/0.6/plus/requirejs.html">RequireJS</a></li>
                   <li><a href="/0.6/plus/travis.html">Travis CI</a></li>
@@ -75,7 +75,7 @@
                   <li><a href="/0.6/dev/plugins.html">Plugins</a></li>
                 </ul>
               </li>
-              <li><a href="javascript:void" class="active">about</a>
+              <li><a href="javascript:void" class="">about</a>
                 <ul>
                   <li><a href="/0.6/about/versioning.html">Versioning</a></li>
                   <li><a href="/0.6/about/changelog.html">Changelog</a></li>
@@ -100,25 +100,84 @@
     </header>
     <div class="container clearfix">
       <div class="sixteen columns">
-        <h1 class="page-title">Versioning<a href="https://github.com/karma-runner/karma/edit/master/docs/about/01-versioning.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
+        <h1 class="page-title">Ember.js<a href="https://github.com/karma-runner/karma/edit/master/docs/plus/08-emberjs.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p>Karma uses <a href="http://semver.org/">Semantic Versioning</a> with a little exception:</p>
-<ul>
-<li>even versions (eg. <code>0.6.x</code>, <code>0.8.x</code>) are considered stable - no breaking changes or new features, only bug fixes will pushed into this branch,</li>
-<li>odd versions (eg. <code>0.7.x</code>, <code>0.9.x</code>) are unstable - anything can happen ;-)</li>
-</ul>
-<p>Therefore it is recommended to rely on the latest stable version, which gives you automatic bug fixes, but does not break you:</p>
-<pre><code class="language-javascript">{
-  <span class="hljs-string">"devDependencies"</span>: {
-    <span class="hljs-string">"karma"</span>: <span class="hljs-string">"~0.10"</span>
-  }
-}</code></pre>
-<h2>Stable channel (branch <code>stable</code>)</h2>
-<pre><code class="language-bash">$ npm install karma</code></pre>
-<h2>Canary channel (branch <code>master</code>)</h2>
-<pre><code class="language-bash">$ npm install karma@canary</code></pre>
+        <div id="markdown" class="sixteen columns bottom"><p>To execute javascript unit and integration tests with ember.js follow the steps below:</p>
+<ol>
+<li><p><a href="../intro/installation.html">install karma</a></p>
+</li>
+<li><p>install the qunit plugin</p>
+<pre><code class="language-bash">npm install karma-qunit --save-dev</code></pre>
+</li>
+<li><p>install the ember preprocessor plugin</p>
+<pre><code class="language-bash">npm install karma-ember-preprocessor --save-dev</code></pre>
+</li>
+<li><p>genenerate a configuration file for karma</p>
+<pre><code class="language-bash">karma init</code></pre>
+<p>note -the above will walk you through the basic setup. An example configuration file that works with ember.js/qunit and phantomjs is below</p>
+<pre><code class="language-javascript">module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(config)</span> {</span>
+ config.set({
+   basePath: <span class="hljs-string">'js'</span>,
+
+   files: [
+     <span class="hljs-string">'vendor/jquery/jquery.min.js'</span>,
+     <span class="hljs-string">'vendor/handlebars/handlebars.js'</span>,
+     <span class="hljs-string">'vendor/ember/ember.js'</span>,
+     <span class="hljs-string">'app.js'</span>,
+     <span class="hljs-string">'tests/*.js'</span>,
+     <span class="hljs-string">'templates/*.handlebars'</span>
+   ],
+
+   browsers: [<span class="hljs-string">'PhantomJS'</span>],
+   singleRun: <span class="hljs-literal">true</span>,
+   autoWatch: <span class="hljs-literal">false</span>,
+
+   frameworks: [<span class="hljs-string">'qunit'</span>],
+
+   plugins: [
+     <span class="hljs-string">'karma-qunit'</span>,
+     <span class="hljs-string">'karma-ember-preprocessor'</span>,
+     <span class="hljs-string">'karma-phantomjs-launcher'</span>
+   ],
+
+   preprocessors: {
+     <span class="hljs-string">'**/*.handlebars'</span>: <span class="hljs-string">'ember'</span>
+   }
+ });
+};</code></pre>
+<p>Note - the <code>files</code> section above should include all dependencies, ie- jQuery/handlebars/ember.js along with the js and handlebars files required to deploy and run your production ember.js application</p>
+<p>Note - when testing ember applications, it is important that karma not being running the tests until the ember application has finished initialization.  you will need to include a small bootstrap file in the <code>files</code> section above to enforce this.  Here&#39;s an example:</p>
+<pre><code class="language-javascript">__karma__.loaded = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>};
+
+App.setupForTesting();
+App.injectTestHelpers();
+
+<span class="hljs-comment">//this gate/check is required given that standard practice in Ember tests to is to call</span>
+<span class="hljs-comment">//Ember.reset() in the afterEach/tearDown for each test.  Doing so, causes the application</span>
+<span class="hljs-comment">//to 're-initialize', resulting in repeated calls to the initialize function below</span>
+<span class="hljs-keyword">var</span> karma_started = <span class="hljs-literal">false</span>;
+App.initializer({
+   name: <span class="hljs-string">"run tests"</span>,
+   initialize: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(container, application)</span> {</span>
+       <span class="hljs-keyword">if</span> (!karma_started) {
+           karma_started = <span class="hljs-literal">true</span>;
+           __karma__.start();
+       }
+   }
+});</code></pre>
+</li>
+<li><p>add a simple qunit test</p>
+<pre><code class="language-javascript">test(<span class="hljs-string">'one should equal one'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> {</span>
+   equal(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-string">'error: one did not equal one'</span>);
+});</code></pre>
+</li>
+<li><p>run the tests with karma from the command line</p>
+<pre><code class="language-bash">karma start</code></pre>
+</li>
+</ol>
+<p>A simple unit / integration tested example app showing karma / qunit / ember in action can be found <a href="https://github.com/toranb/ember-testing-example">here</a></p>
 
         </div>
       </div>

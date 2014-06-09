@@ -6,7 +6,7 @@
 <head>
   <!-- Basic Page Needs-->
   <meta charset="utf-8">
-  <title>Karma - Versioning</title>
+  <title>Karma - Developing Plugins</title>
   <!-- Mobile specific Metas-->
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="">
@@ -27,7 +27,7 @@
     <header>
       <div class="flash">
         <b>Heads Up!</b> You're viewing the docs for <b>v0.6</b>, an old version of Karma.
-        <a href="/0.12/about/versioning.html"><b>v0.12</b> is the newest</a>.
+        <a href="/0.12/dev/plugins.html"><b>v0.12</b> is the newest</a>.
       </div>
       <div class="container clearfix">
         <div class="six columns">
@@ -66,7 +66,7 @@
                   <li><a href="/0.6/plus/emberjs.html">Ember.js</a></li>
                 </ul>
               </li>
-              <li><a href="javascript:void" class="">dev</a>
+              <li><a href="javascript:void" class="active">dev</a>
                 <ul>
                   <li><a href="/0.6/dev/contributing.html">Contributing</a></li>
                   <li><a href="/0.6/dev/making-changes.html">Making Changes</a></li>
@@ -75,7 +75,7 @@
                   <li><a href="/0.6/dev/plugins.html">Plugins</a></li>
                 </ul>
               </li>
-              <li><a href="javascript:void" class="active">about</a>
+              <li><a href="javascript:void" class="">about</a>
                 <ul>
                   <li><a href="/0.6/about/versioning.html">Versioning</a></li>
                   <li><a href="/0.6/about/changelog.html">Changelog</a></li>
@@ -100,25 +100,37 @@
     </header>
     <div class="container clearfix">
       <div class="sixteen columns">
-        <h1 class="page-title">Versioning<a href="https://github.com/karma-runner/karma/edit/master/docs/about/01-versioning.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
+        <h1 class="page-title">Developing Plugins<a href="https://github.com/karma-runner/karma/edit/master/docs/dev/05-plugins.md" data-tooltip="Edit this page on GitHub" class="edit"><i class="icon-edit"></i></a><span class="line"></span>
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p>Karma uses <a href="http://semver.org/">Semantic Versioning</a> with a little exception:</p>
+        <div id="markdown" class="sixteen columns bottom"><p>Karma can be extended through plugins. A plugin is essentially an NPM module. Typically, there are four kinds of plugins: <strong>frameworks</strong>, <strong>reporters</strong>, <strong>launchers</strong> and <strong>preprocessors</strong>. The best way to understand how this works is to take a look at some of the existing plugins. Following sections list some of the plugins that you might use as a reference.</p>
+<h2>Frameworks</h2>
 <ul>
-<li>even versions (eg. <code>0.6.x</code>, <code>0.8.x</code>) are considered stable - no breaking changes or new features, only bug fixes will pushed into this branch,</li>
-<li>odd versions (eg. <code>0.7.x</code>, <code>0.9.x</code>) are unstable - anything can happen ;-)</li>
+<li>example plugins: <a href="https://github.com/karma-runner/karma-jasmine">karma-jasmine</a>, <a href="https://github.com/karma-runner/karma-mocha">karma-mocha</a>, <a href="https://github.com/karma-runner/karma-requirejs">karma-requirejs</a></li>
+<li>use naming convention is <code>karma-*</code></li>
+<li>use NPM keywords <code>karma-plugin</code>, <code>karma-framework</code>.</li>
 </ul>
-<p>Therefore it is recommended to rely on the latest stable version, which gives you automatic bug fixes, but does not break you:</p>
-<pre><code class="language-javascript">{
-  <span class="hljs-string">"devDependencies"</span>: {
-    <span class="hljs-string">"karma"</span>: <span class="hljs-string">"~0.10"</span>
-  }
-}</code></pre>
-<h2>Stable channel (branch <code>stable</code>)</h2>
-<pre><code class="language-bash">$ npm install karma</code></pre>
-<h2>Canary channel (branch <code>master</code>)</h2>
-<pre><code class="language-bash">$ npm install karma@canary</code></pre>
+<h2>Reporters</h2>
+<ul>
+<li>example plugins: <a href="https://github.com/karma-runner/karma-growl-reporter">karma-growl-reporter</a>, <a href="https://github.com/karma-runner/karma-junit-reporter">karma-junit-reporter</a></li>
+<li>use naming convention is <code>karma-*-reporter</code></li>
+<li>use NPM keywords <code>karma-plugin</code>, <code>karma-reporter</code></li>
+</ul>
+<h2>Launchers</h2>
+<ul>
+<li>example plugins: <a href="https://github.com/karma-runner/karma-chrome-launcher">karma-chrome-launcher</a>, <a href="https://github.com/karma-runner/karma-sauce-launcher">karma-sauce-launcher</a></li>
+<li>use naming convention is <code>karma-*-launcher</code></li>
+<li>use NPM keywords <code>karma-plugin</code>, <code>karma-launcher</code></li>
+</ul>
+<h2>Preprocessors</h2>
+<ul>
+<li>example plugins: <a href="https://github.com/karma-runner/karma-coffee-preprocessor">karma-coffee-preprocessor</a>, <a href="https://github.com/karma-runner/karma-ng-html2js-preprocessor">karma-ng-html2js-preprocessor</a></li>
+<li>use naming convention is <code>karma-*-preprocessor</code></li>
+<li>user NPM keywords <code>karma-plugin</code>, <code>karma-preprocessor</code></li>
+</ul>
+<h2>Crazier stuff</h2>
+<p>Karma is assembled by Dependency Injection and a plugin is just an additional DI module (see <a href="https://github.com/vojtajina/node-di">node-di</a> for more), that can be loaded by Karma. Therefore it can asks for pretty much any Karma component and interact with it. There are couple of plugins that do more interesting stuff like this, check out <a href="https://github.com/karma-runner/karma-closure">karma-closure</a>, <a href="https://github.com/karma-runner/karma-intellij">karma-intellij</a>, <a href="https://github.com/karma-runner/karma-dart">karma-dart</a>.</p>
 
         </div>
       </div>

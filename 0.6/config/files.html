@@ -25,6 +25,10 @@
 <body>
   <div id="wrap" class="boxed">
     <header>
+      <div class="flash">
+        <b>Heads Up!</b> You're viewing the docs for <b>v0.6</b>, an old version of Karma.
+        <a href="/0.12/config/files.html"><b>v0.12</b> is the newest</a>.
+      </div>
       <div class="container clearfix">
         <div class="six columns">
           <div class="logo"><a href="/0.6/index.html"><img src="/assets/img/banner.png" alt="Karma - Spectacular Test Runner for JavaScript" title="Karma - Spectacular Test Runner for JavaScript"></a></div>
@@ -36,6 +40,8 @@
                 <ul>
                   <li><a href="/0.6/intro/installation.html">Installation</a></li>
                   <li><a href="/0.6/intro/configuration.html">Configuration</a></li>
+                  <li><a href="/0.6/intro/how-it-works.html">How It Works</a></li>
+                  <li><a href="/0.6/intro/faq.html">FAQ</a></li>
                   <li><a href="/0.6/intro/troubleshooting.html">Troubleshooting</a></li>
                 </ul>
               </li>
@@ -45,31 +51,35 @@
                   <li><a href="/0.6/config/files.html">Files</a></li>
                   <li><a href="/0.6/config/browsers.html">Browsers</a></li>
                   <li><a href="/0.6/config/preprocessors.html">Preprocessors</a></li>
-                  <li><a href="/0.6/config/coverage.html">Coverage</a></li>
+                  <li><a href="/0.6/config/plugins.html">Plugins</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">plus</a>
                 <ul>
-                  <li><a href="/0.6/plus/AngularJS.html">AngularJS</a></li>
-                  <li><a href="/0.6/plus/RequireJS.html">RequireJS</a></li>
-                  <li><a href="/0.6/plus/Jenkins-CI.html">Jenkins CI</a></li>
-                  <li><a href="/0.6/plus/Travis-CI.html">Travis CI</a></li>
-                  <li><a href="/0.6/plus/Cloud9.html">Cloud9</a></li>
-                  <li><a href="/0.6/plus/Teamcity.html">Teamcity</a></li>
-                  <li><a href="/0.6/plus/Yeoman.html">Yeoman</a></li>
+                  <li><a href="/0.6/plus/requirejs.html">RequireJS</a></li>
+                  <li><a href="/0.6/plus/travis.html">Travis CI</a></li>
+                  <li><a href="/0.6/plus/jenkins.html">Jenkins CI</a></li>
+                  <li><a href="/0.6/plus/semaphore.html">Semaphore CI</a></li>
+                  <li><a href="/0.6/plus/cloud9.html">Cloud9</a></li>
+                  <li><a href="/0.6/plus/angularjs.html">AngularJS</a></li>
+                  <li><a href="/0.6/plus/yeoman.html">Yeoman</a></li>
+                  <li><a href="/0.6/plus/emberjs.html">Ember.js</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">dev</a>
                 <ul>
-                  <li><a href="/0.6/dev/public-api.html">Public Api</a></li>
                   <li><a href="/0.6/dev/contributing.html">Contributing</a></li>
-                  <li><a href="/0.6/dev/git-commit-msg.html">Git Commit Msg</a></li>
+                  <li><a href="/0.6/dev/making-changes.html">Making Changes</a></li>
+                  <li><a href="/0.6/dev/maintaining.html">Maintaining</a></li>
+                  <li><a href="/0.6/dev/public-api.html">Public Api</a></li>
+                  <li><a href="/0.6/dev/plugins.html">Plugins</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void" class="">about</a>
                 <ul>
-                  <li><a href="/0.6/about/changelog.html">Changelog</a></li>
                   <li><a href="/0.6/about/versioning.html">Versioning</a></li>
+                  <li><a href="/0.6/about/changelog.html">Changelog</a></li>
+                  <li><a href="/0.6/about/migration.html">Migration</a></li>
                 </ul>
               </li>
               <li><a href="javascript:void">v0.6</a>
@@ -94,31 +104,14 @@
         </h1>
       </div>
       <div class="page-columns">
-        <div id="markdown" class="sixteen columns bottom"><p><strong>The files array determines which files are loaded, watched and served by Testacular.</strong></p>
-<h2>Adapters</h2>
-<p>The first thing you usually need is an adapter. The following adapters
-are bundled with Testacular:</p>
-<ul>
-<li>Jasmine (<code>JASMINE</code>, <code>JASMINE_ADAPTER</code>)</li>
-<li>Mocha (<code>MOCHA</code>, <code>MOCHA_ADAPTER</code>)</li>
-<li>QUnit (<code>QUNIT</code>, <code>QUNIT_ADAPTER</code>)</li>
-<li>RequireJS (<code>REQUIRE</code>, <code>REQUIRE_ADAPTER</code>)</li>
-<li>Angular Scenario Runner (<code>ANGULAR_SCENARIO</code>, <code>ANGULAR_SCENARIO_ADAPTER</code>)</li>
-</ul>
-<p>If you want to use any of these, add <code>&lt;FRAMEWORK&gt;</code> and
-<code>&lt;FRAMEWORK&gt;_ADAPTER</code> to your <code>files</code> list. So for example if you want
-to use Mocha you have the following in your config file:</p>
-<pre><code class="language-javascript">files = [
-  MOCHA,
-  MOCHA_ADAPTER
-];</code></pre>
+        <div id="markdown" class="sixteen columns bottom"><p><strong>The <code>files</code> array determines which files are included in the browser and which files are watched and served by Karma.</strong></p>
 <h2>Pattern matching and <code>basePath</code></h2>
 <ul>
-<li>All the relative patterns will get resolved to <code>basePath</code> first.</li>
+<li>All of the relative patterns will get resolved to <code>basePath</code> first.</li>
 <li>If the <code>basePath</code> is a relative path, it gets resolved to the
 directory where the configuration file is.</li>
 <li>Eventually, all the patterns will get resolved into files using
-<a href="https://github.com/isaacs/node-glob">glob</a>, so you can use expressions like <code>test/unit/**/*.spec.js</code>.</li>
+<a href="https://github.com/isaacs/node-glob">glob</a>, so you can use <a href="https://github.com/isaacs/minimatch">minimatch</a> expressions like <code>test/unit/**/*.spec.js</code>.</li>
 </ul>
 <h2>Ordering</h2>
 <ul>
@@ -129,14 +122,10 @@ are included in the browser.</li>
 same file, it&#39;s included as if it only matched the first pattern.</li>
 </ul>
 <h2>Included, served, watched</h2>
-<p>Since version 0.5.2 there is the ability to configure the patterns
-more closely.</p>
-<p>If you define them like before a simple pattern like
-<code>&#39;test/unit/*.js&#39;</code> this gets expanded internally to the following:</p>
-<pre><code class="language-javascript">  {pattern: <span class="string">'test/unit/*.js'</span>, watched: <span class="literal">true</span>, included: <span class="literal">true</span>, served: <span class="literal">true</span>}</code></pre>
+<p>Each pattern is either a simple string or an object with four properties:</p>
 <h3><code>pattern</code></h3>
 <ul>
-<li><strong>Description.</strong> The pattern to use for matching.</li>
+<li><strong>Description.</strong> The pattern to use for matching. This property is mandatory.</li>
 </ul>
 <h3><code>watched</code></h3>
 <ul>
@@ -150,33 +139,47 @@ watched for changes.</li>
 <li><strong>Type.</strong> Boolean</li>
 <li><strong>Default.</strong> <code>true</code></li>
 <li><strong>Description.</strong> Should the files be included in the browser using
-  <code>&lt;script&gt;</code> tag? Use <code>false</code> if you wanna load them manually, eg.
-  using <a href="../plus/RequireJS.html">Require.js</a>.</li>
+  <code>&lt;script&gt;</code> tag? Use <code>false</code> if you want to load them manually, eg.
+  using <a href="../plus/requirejs.html">Require.js</a>.</li>
 </ul>
 <h3><code>served</code></h3>
 <ul>
 <li><strong>Type.</strong> Boolean</li>
 <li><strong>Default.</strong> <code>true</code></li>
-<li><strong>Description.</strong> Should the files be served by Testacular&#39;s webserver?</li>
+<li><strong>Description.</strong> Should the files be served by Karma&#39;s webserver?</li>
 </ul>
+<h2>Preprocessor transformations</h2>
+<p>Depending on preprocessor configuration, be aware that files loaded may be transformed and no longer available in
+their native format. For instance, if html2js preprocessor is enabled, the actual .html files are no longer
+served - but rather available as <code>window.__html__[&#39;my.html&#39;]</code>. Read more about <a href="preprocessors.html">preprocessors</a>.</p>
 <h2>Complete example</h2>
-<p>Here is a complete example showing the different options that are possible.</p>
-<pre><code class="language-javascript">files = [
+<p>Here is a complete example showing the different options possible:</p>
+<pre><code class="language-javascript">files: [
 
-  <span class="comment">// Adapter</span>
-  MOCHA,
-  MOCHA_ADAPTER,
+  <span class="hljs-comment">// simple pattern to load the needed testfiles</span>
+  <span class="hljs-comment">// equal to {pattern: 'test/unit/*.spec.js', watched: true, served: true, included: true}</span>
+  <span class="hljs-string">'test/unit/*.spec.js'</span>,
 
-  <span class="comment">// simple patterns to load the needed testfiles</span>
-  <span class="string">'test/fixtures/**/*.html'</span>,
-  <span class="string">'test/unit/*.spec.js'</span>,
+  <span class="hljs-comment">// this file gets served but will be ignored by the watcher</span>
+  <span class="hljs-comment">// note if html2js preprocessor is active, reference as `window.__html__['compiled/index.html']`</span>
+  {pattern: <span class="hljs-string">'compiled/index.html'</span>, watched: <span class="hljs-literal">false</span>},
 
-  <span class="comment">// this file gets served but will be ignored by the watcher</span>
-  {pattern: <span class="string">'compiled/index.html'</span>, watched: <span class="literal">false</span>},
-
-  <span class="comment">// this file only gets watched but otherwise ignored</span>
-  {pattern: <span class="string">'app/index.html'</span>, included: <span class="literal">false</span>, served: <span class="literal">false</span>}
-];</code></pre>
+  <span class="hljs-comment">// this file only gets watched and is otherwise ignored</span>
+  {pattern: <span class="hljs-string">'app/index.html'</span>, included: <span class="hljs-literal">false</span>, served: <span class="hljs-literal">false</span>}
+],</code></pre>
+<h2>Loading Assets</h2>
+<p>By default all assets are served at <code>http://localhost:[PORT]/base/</code>, Example for loading images</p>
+<pre><code class="language-javascript">files: [
+  {pattern: <span class="hljs-string">'test/images/*.jpg'</span>, watched: <span class="hljs-literal">false</span>, included: <span class="hljs-literal">false</span>, served: <span class="hljs-literal">true</span>}
+],</code></pre>
+<p>in this case the image is accessed at <code>http://localhost:[PORT]/base/test/images/[MY IMAGE].jpg</code></p>
+<p>notice the <strong>base</strong> in the URL</p>
+<p>or in addition you can use a proxy</p>
+<pre><code class="language-javascript">proxies: {
+  <span class="hljs-string">'/img/'</span>: <span class="hljs-string">'http://localhost:8080/base/test/images/'</span>
+},</code></pre>
+<p>now you can fetch images in &#39;test/images&#39; at <code>http://localhost:8080/img/[MY IMAGE].jpg</code></p>
+<p>just change <strong>8080</strong> to the port you use</p>
 
         </div>
       </div>
