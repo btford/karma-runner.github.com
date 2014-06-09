@@ -1,7 +1,7 @@
 ## Overview
-**In order to serve you well, Karma needs to know about your project in order to test it
-and this is done via a configuration file. This page explains how to create such a configuration file.**
-
+In order to serve you well, Karma needs to know about your project in order to test it
+and this is done via a configuration file. The easiest way to generate initial configuration file
+is using `karma init` command. This page lists all the available configuration options.
 
 Note: Most of the framework adapters, reporters, preprocessors and launchers needs to be loaded as [plugins].
 
@@ -11,7 +11,7 @@ Within the configuration file, the configuration code is put together by setting
 which accepts one argument: the configuration object.
 
 ```javascript
-// an example karma.conf.js
+// karma.conf.js
 module.exports = function(config) {
   config.set({
     basePath: '../..',
@@ -22,16 +22,13 @@ module.exports = function(config) {
 ```
 
 ```coffeescript
-# an example karma.conf.coffee
+# karma.conf.coffee
 module.exports = (config) ->
   config.set
     basePath: '../..'
     frameworks: ['jasmine']
     # ...
 ```
-
-To see a more detailed example configuration file, see [test/client/karma.conf.js] which contains most of
-the available configuration options.
 
 ## File Patterns
 All of the configuration options which specify file paths use the [minimatch][minimatch] library to facilitate flexible but concise file expressions, so you can easily list all the files you want to include, along with excluding the files that need to be skipped.
@@ -54,7 +51,7 @@ These are all the available configuration options.
 ## autoWatch
 **Type:** Boolean
 
-**Default:**  `false`
+**Default:**  `true`
 
 **CLI:** `--auto-watch`, `--no-auto-watch`
 
@@ -81,6 +78,38 @@ have occurred before starting the test process again.
 **Description:** The root path location that will be used to resolve all relative
 paths defined in `files` and `exclude`. If the `basePath` configuration is a
 relative path then it will be resolved to the `__dirname` of the configuration file.
+
+
+## browserDisconnectTimeout
+**Type:** Number
+
+**Default:** `2000`
+
+**Description:** How long does Karma wait for a browser to reconnect (in ms).
+
+With a flaky connection it is pretty common that browser disconnects but the actual execution is running without any problems. Karma does not treat a disconnection as immediate failure and rather wait `browserDisconnectTimeout` ms. If the browser reconnect during that time, everything is fine.
+
+
+## browserDisconnectTolerance
+**Type:** Number
+
+**Default:** `0`
+
+**Description:** The number of disconnections tolerated.
+
+The `disconnectTolerance` value represents the maximum number of tries a browser will attempt in case of disconnection.
+Usually any disconnection is considered as a failure, but this option allows to define a tolerance level when there is
+a flaky network link between the karma server and the browsers.
+
+
+## browserNoActivityTimeout
+**Type:** Number
+
+**Default:** `10000`
+
+**Description:** How long does Karma wait for a message from a browser before disconnecting it (in ms).
+
+If, during the execution, Karma does not receive any message from a browser within `browserNoActivityTimeout` ms, it will disconnect the browser.
 
 
 ## browsers
@@ -119,6 +148,19 @@ The `captureTimeout` value represents the maximum boot-up time allowed for a bro
 If any browser does not get captured within the timeout, Karma will kill it and try to launch
 it again and, after three attempts to capture it, Karma will give up.
 
+## client.args
+**Type:** Array
+
+**Default:** `undefined`
+
+**CLI:** All arguments after `--` (only when using `karma run`)
+
+**Description:** When `karma run` is passed additional arguments on the command-line, they
+are passed through to the test adapter as ``karma.config.args` (an array of strings).
+The `client.args` option allows you to set this value for actions other than `run`.
+
+How this value is used is up to your test adapter - you should check your adapter's
+documentation to see how (and if) it uses this value.
 
 ## colors
 **Type:** Boolean
@@ -311,6 +353,21 @@ on whether all tests passed or any tests failed.
 is handed off to [socket.io](https://github.com/LearnBoost/Socket.IO/wiki/Configuring-Socket.IO) (which manages the communication
 between browsers and the testing server).
 
+## client.useIframe
+**Type:** Boolean
+
+**Default:** `true`
+
+**Description:** Run the tests inside an iframe or a new window
+
+If true, Karma runs the tests inside an iframe. If false, Karma runs the tests in a new window. Some tests may not run in an iFrame and may need a new window to run.
+
+## client.captureConsole
+**Type:** Boolean
+
+**Default:** `true`
+
+**Description:** Capture all console output and pipe it to the terminal.
 
 ## urlRoot
 **Type:** String
@@ -324,7 +381,6 @@ sometimes you might want to proxy a url that is already taken by Karma.
 
 
 [plugins]: plugins.html
-[test/client/karma.conf.js]: https://github.com/karma-runner/karma/blob/master/test/client/karma.conf.js
 [config/files]: files.html
 [config/browsers]: browsers.html
 [config/preprocessors]: preprocessors.html

@@ -3,11 +3,11 @@ The results for each test against each browser are examined and displayed via th
 such that they can see which browsers and tests passed or failed.
 
 A browser can be captured either
-- manually, by visiting the URL where the Karma server is listening (typically `http://localhost:9876/`)
-- or automatically by letting Karma know which browsers to start when Karma is run (see <a href="../config/browsers.html">browsers</a>)
+- manually, by visiting the URL where the Karma server is listening (typically `http://localhost:9876/`),
+- or automatically by letting Karma know which browsers to start when Karma is run (see [browsers]).
 
 Karma also watches all the files, specified within the configuration file, and whenever any file changes, it triggers the test run by
-sending a signal the testing server to inform all of the captured browsers to run the test code again.
+sending a signal to the testing server to inform all of the captured browsers to run the test code again.
 Each browser then loads the source files inside an IFrame, executes the tests and reports the results back to the server.
 
 The server collects the results from all of the captured browsers and presents them to the developer.
